@@ -1,6 +1,13 @@
+import uuid
+
+
 class House:
-    def __init__(self, adress, floors, communication_access, departmental_affiliation, number_of_apartments):
-        self.adress = adress
+    """Describes the house, stores information about the number of apartments and residents in it."""
+
+    def __init__(self, id, house_number, adress, floors, communication_access, departmental_affiliation):
+        self.id = id
+        self.house_number = house_number
+        self.address = adress
         self.floors = floors
 
         # Тип доступу (індивідуальні, блоковані, секційні, коридорні, галерейні, змішаної структури)
@@ -9,31 +16,37 @@ class House:
         # Відомча приналежність (державна, кооперативна, приватна тощо).
         self.departmental_affiliation = departmental_affiliation
 
-        self.number_of_apartments = number_of_apartments
+        self.flats = []
         self.house_residents = []
 
     def get_info(self):
-        return (self.adress, self.floors, self.communication_access, self.departmental_affiliation, self.number_of_apartments, self.house_residents)
+        return (self.id, self.house_number, self.address, self.floors, self.communication_access, self.departmental_affiliation, self.flats, self.house_residents)
 
     def print_info(self):
         print(
-            f"Adress: {self.adress}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nNumber of apartments: {self.number_of_apartments}\nHouse residents: {self.house_residents}")
+            f"House id: {self.id}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nFlats: {self.flats}\nHouse residents: {self.house_residents}")
 
     def attach_resident(self, resident):
         self.house_residents.append(resident)
 
     def register_new_house(self):
-        adress = input("Enter house adress: ")
+        house_number = input("Enter house number: ")
+        address = input("Enter house adress: ")
         floors = input("Enter number of floors: ")
         communication_access = input(
             "Communication access (individual, blocked, corridor, gallery, mixed, etc.): ")
         departmental_affiliation = input(
             "Departmental_affiliation (state, cooperative, private, etc.): ")
-        number_of_apartments = input("Number of apartments: ")
-        return (adress, floors, communication_access, departmental_affiliation, number_of_apartments)
+        ID = uuid.uuid4()
+
+        new_house = House(ID, house_number, address, floors,
+                          communication_access, departmental_affiliation)
+        return new_house
 
 
 class Resident:
+    """Description of the person"""
+
     def __init__(self, id, name, surname, age, gender, phone_number, email):
         self.id = id
         self.name = name
@@ -60,11 +73,18 @@ class Resident:
         gender = input("Enter resident gender: ")
         phone_number = input("Enter resident phone number: ")
         email = input("Enter resident email: ")
-        return (name, surname, age, gender, phone_number, email)
+        ID = uuid.uuid4()
+
+        new_resident = Resident(ID, name, surname, age,
+                                gender, phone_number, email)
+        return new_resident
 
 
 class Flat:
-    def __init__(self, flat_number, floor, rooms, area):
+    """Describes the apartment and stores information about its residents"""
+
+    def __init__(self, id, flat_number, floor, rooms, area):
+        self.id = id
         self.flat_number = flat_number
         self.floor = floor
         self.rooms = rooms
@@ -72,11 +92,11 @@ class Flat:
         self.residents = []
 
     def get_info(self):
-        return (self.flat_number, self.floor, self.rooms, self.area, self.residents)
+        return (self.id, self.flat_number, self.floor, self.rooms, self.area, self.residents)
 
     def print_flat_info(self):
         print(
-            f"Flat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
+            f"Flat id: {self.id}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
 
     def attach_resident(self, resident):
         self.residents.append(resident)
@@ -86,4 +106,7 @@ class Flat:
         floor = input("The apartment is located on the floor: ")
         rooms = input("Number of rooms: ")
         area = input("Size of apartment in square meters: ")
-        return (flat_number, floor, rooms, area)
+        ID = uuid.uuid4()
+
+        new_flat = Flat(ID, flat_number, floor, rooms, area)
+        return new_flat
