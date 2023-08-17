@@ -17,100 +17,122 @@ class House:
         self.departmental_affiliation = departmental_affiliation
 
         self.flats = []
-    """ 
-        def get_ID(self):
-            return self.ID
 
-        def get_house_number(self):
-            return self.house_number
+    def get_ID(self):
+        return self.ID
 
-        def get_adress(self):
-            return self.address
+    def get_house_number(self):
+        return self.house_number
 
-        def get_floors(self):
-            return self.floors
+    def get_address(self):
+        return self.address
 
-        def get_communication_access(self):
-            return self.communication_access
-
-        def get_departmental_affiliation(self):
-            return self.departmental_affiliation
-
-        def get_flats(self):
-            return self.flats
-    """
+    def get_floors(self):
+        return self.floors
 
     def print_info(self):
         print("__________________________________________________\n")
         print(
             f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nFlats: {self.flats}")
 
-    def register_new_house(self):
+    def register_new_house(self, houses_list):
 
-        print("__________________________________________________\n")
-        house_number = input("Enter house number: ")
-        address = input("Enter house adress: ")
-        floors = input("Enter number of floors: ")
-        communication_access = input(
-            "Communication access (individual, blocked, corridor, gallery, mixed, etc.): ")
-        departmental_affiliation = input(
-            "Departmental_affiliation (state, cooperative, private, etc.): ")
-        ID = uuid.uuid4()
+        try:
+            print("__________________________________________________\n")
+            house_nmbr = input("House number: ")
+            address = input("House adress: ")
+            for house in houses_list:
+                if house.house_number == house_nmbr and house.address == address:
+                    print("This house is already listed!")
+                    return False
 
-        new_house = House(ID, house_number, address, floors,
-                          communication_access, departmental_affiliation)
+            floors = input("Number of floors: ")
+            if floors <= 0:
+                print("A house cannot have less than one floor!")
+                return False
 
-        return new_house
+            communication_access = input(
+                "Communication access (individual, blocked, corridor, gallery, mixed, etc.): ")
+            communication_access = communication_access.lower()
+            departmental_affiliation = input(
+                "Departmental_affiliation (state, cooperative, private, etc.): ")
+            departmental_affiliation = departmental_affiliation.lower()
+
+            for house in houses_list:
+                Id = uuid.uuid4()
+                while any(item.ID == Id for item in houses_list):
+                    Id = uuid.uuid4()
+                house.ID = Id
+
+            new_house = House(Id, house_nmbr, address, floors,
+                              communication_access, departmental_affiliation)
+
+            return new_house
+        except Exception as err:
+            print("ERROR ---> ", err)
 
 
 class Flat:
     """Describes the apartment and stores information about its residents"""
 
-    def __init__(self, ID, flat_number, floor, rooms, area):
+    def __init__(self, ID, house, flat_number, floor, rooms, area):
         self.ID = ID
+        self.house = house
         self.flat_number = flat_number
         self.floor = floor
         self.rooms = rooms
         self.area = area
         self.residents = []
-    """ 
-        def get_ID(self):
-            return self.ID
 
-        def get_flat_number(self):
-            return self.flat_number
+    def get_ID(self):
+        return self.ID
 
-        def get_floor(self):
-            return self.floor
+    def get_flat_number(self):
+        return self.flat_number
 
-        def get_rooms(self):
-            return self.rooms
+    def get_floor(self):
+        return self.floor
 
-        def get_area(self):
-            return self.area
-
-        def get_residents(self):
-            return self.residents 
-    """
-
-    def print_flat_info(self):
+    def print_info(self):
         print("__________________________________________________\n")
         print(
-            f"Flat id: {self.ID}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
+            f"Flat id: {self.ID}\nHouse: {self.house}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
 
     def attach_resident(self, resident):
         self.residents.append(resident)
 
-    def register_new_flat(self):
-
+    def register_new_flat(self, house, flats_list):
         print("__________________________________________________\n")
-        flat_number = input("Enter flat number: ")
-        floor = input("The apartment is located on the floor: ")
-        rooms = input("Number of rooms: ")
-        area = input("Size of apartment in square meters: ")
-        ID = uuid.uuid4()
 
-        new_flat = Flat(ID, flat_number, floor, rooms, area)
+        flat_nmbr = input("Flat number: ")
+        for flat in flats_list:
+            if flat.flat_number == flat_nmbr:
+                print("This flat is already listed!")
+                return False
+
+        floor = input("The apartment is located on the floor: ")
+        if floor < house.floors or floor > house.floors:
+            print(
+                f"Wrong floor! There are only {house.floors} floors in this building!")
+            return False
+
+        rooms = input("Number of rooms: ")
+        if rooms <= 0:
+            print("An apartment cannot have less than 1 room!")
+            return False
+
+        area = input("Size of apartment in square meters: ")
+        if rooms <= 0:
+            print("The apartment cannot be less than 1 square meter!")
+            return False
+
+        for house in flats_list:
+            Id = uuid.uuid4()
+            while any(item.ID == Id for item in flats_list):
+                Id = uuid.uuid4()
+            house.ID = Id
+
+        new_flat = Flat(Id, house, flat_nmbr, floor, rooms, area)
 
         return new_flat
 
@@ -118,7 +140,7 @@ class Flat:
 class Resident:
     """Description of the person"""
 
-    def __init__(self, ID, name, surname, age, gender, phone_number, email):
+    def __init__(self, ID, name, surname, age, gender, phone_number, email, flat_number):
         self.ID = ID
         self.name = name
         self.surname = surname
@@ -126,51 +148,38 @@ class Resident:
         self.gender = gender
         self.phone_number = phone_number
         self.email = email
-        self.house = None
+        self.flat_number = flat_number
 
-    def set_house(self, house):
-        self.house = house
+    def get_ID(self):
+        return self.ID
 
-    """ 
-        def get_ID(self):
-            return self.ID
+    def get_name(self):
+        return self.name
 
-        def get_name(self):
-            return self.name
+    def get_surname(self):
+        return self.surname
 
-        def get_surname(self):
-            return self.surname
-
-        def get_age(self):
-            return self.age
-
-        def get_gender(self):
-            return self.gender
-
-        def get_phone_number(self):
-            return self.phone_number
-
-        def get_email(self):
-            return self.email
-    """
+    def get_age(self):
+        return self.age
 
     def print_info(self):
         print("__________________________________________________\n")
         print(
-            f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nGender: {self.gender}\nPhone number: {self.phone_number}\nEmail: {self.email}")
+            f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nGender: {self.gender}\nPhone number: {self.phone_number}\nEmail: {self.email}\nFlat number: {self.flat_number}")
 
     def register_new_resident(self):
 
         print("__________________________________________________\n")
-        name = input("Enter resident name: ")
-        surname = input("Enter resident surname: ")
-        age = input("Enter resident age: ")
-        gender = input("Enter resident gender: ")
-        phone_number = input("Enter resident phone number: ")
-        email = input("Enter resident email: ")
+        name = input("Name: ")
+        surname = input("Surname: ")
+        age = input("Age: ")
+        gender = input("Gender: ")
+        phone_number = input("Phone number: ")
+        email = input("Email: ")
+        flat_number = input("Flat number: ")
         ID = uuid.uuid4()
 
         new_resident = Resident(ID, name, surname, age,
-                                gender, phone_number, email)
+                                gender, phone_number, email, flat_number)
 
         return new_resident
