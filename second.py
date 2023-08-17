@@ -46,7 +46,7 @@ class House:
                     print("This house is already listed!")
                     return False
 
-            floors = input("Number of floors: ")
+            floors = int(input("Number of floors: "))
             if floors <= 0:
                 print("A house cannot have less than one floor!")
                 return False
@@ -58,11 +58,7 @@ class House:
                 "Departmental_affiliation (state, cooperative, private, etc.): ")
             departmental_affiliation = departmental_affiliation.lower()
 
-            for house in houses_list:
-                Id = uuid.uuid4()
-                while any(item.ID == Id for item in houses_list):
-                    Id = uuid.uuid4()
-                house.ID = Id
+            Id = uuid.uuid4()
 
             new_house = House(Id, house_nmbr, address, floors,
                               communication_access, departmental_affiliation)
@@ -96,45 +92,44 @@ class Flat:
     def print_info(self):
         print("__________________________________________________\n")
         print(
-            f"Flat id: {self.ID}\nHouse: {self.house}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
+            f"Flat id: {self.ID}\nHouse address: {self.house.address}\nHouse number: {self.house.house_number}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
 
-    def attach_resident(self, resident):
-        self.residents.append(resident)
+    def attach_resident(self, resident_ID):
+        self.residents.append(resident_ID)
 
     def register_new_flat(self, house, flats_list):
-        print("__________________________________________________\n")
+        try:
+            print("__________________________________________________\n")
 
-        flat_nmbr = input("Flat number: ")
-        for flat in flats_list:
-            if flat.flat_number == flat_nmbr:
-                print("This flat is already listed!")
+            flat_nmbr = int(input("Flat number: "))
+            for flat in flats_list:
+                if flat.flat_number == flat_nmbr:
+                    print("This flat is already listed!")
+                    return False
+
+            floor = int(input("The apartment is located on the floor: "))
+            if floor > 0 and floor <= house.floors:
+                print(
+                    f"Wrong floor! There are only {house.floors} floors in this building!")
                 return False
 
-        floor = input("The apartment is located on the floor: ")
-        if floor < house.floors or floor > house.floors:
-            print(
-                f"Wrong floor! There are only {house.floors} floors in this building!")
-            return False
+            rooms = int(input("Number of rooms: "))
+            if rooms <= 0:
+                print("An apartment cannot have less than 1 room!")
+                return False
 
-        rooms = input("Number of rooms: ")
-        if rooms <= 0:
-            print("An apartment cannot have less than 1 room!")
-            return False
+            area = float(input("Size of apartment in square meters: "))
+            if area <= 0:
+                print("The apartment cannot be less than 1 square meter!")
+                return False
 
-        area = input("Size of apartment in square meters: ")
-        if rooms <= 0:
-            print("The apartment cannot be less than 1 square meter!")
-            return False
-
-        for house in flats_list:
             Id = uuid.uuid4()
-            while any(item.ID == Id for item in flats_list):
-                Id = uuid.uuid4()
-            house.ID = Id
 
-        new_flat = Flat(Id, house, flat_nmbr, floor, rooms, area)
+            new_flat = Flat(Id, house, flat_nmbr, floor, rooms, area)
 
-        return new_flat
+            return new_flat
+        except Exception as err:
+            print("ERROR ---> ", err)
 
 
 class Resident:
@@ -167,19 +162,20 @@ class Resident:
         print(
             f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nGender: {self.gender}\nPhone number: {self.phone_number}\nEmail: {self.email}\nFlat number: {self.flat_number}")
 
-    def register_new_resident(self):
+    def register_new_resident(self, flat_number):
+        try:
+            print("__________________________________________________\n")
+            name = input("Name: ")
+            surname = input("Surname: ")
+            age = int(input("Age: "))
+            gender = input("Gender: ")
+            phone_number = input("Phone number: ")
+            email = input("Email: ")
+            ID = uuid.uuid4()
 
-        print("__________________________________________________\n")
-        name = input("Name: ")
-        surname = input("Surname: ")
-        age = input("Age: ")
-        gender = input("Gender: ")
-        phone_number = input("Phone number: ")
-        email = input("Email: ")
-        flat_number = input("Flat number: ")
-        ID = uuid.uuid4()
+            new_resident = Resident(ID, name, surname, age,
+                                    gender, phone_number, email, flat_number)
 
-        new_resident = Resident(ID, name, surname, age,
-                                gender, phone_number, email, flat_number)
-
-        return new_resident
+            return new_resident
+        except Exception as err:
+            print("ERROR ---> ", err)

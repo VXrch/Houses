@@ -33,11 +33,12 @@ def add_an_apartment(houses_list, flats_list):
 
     full_houses_list(houses_list)
     print()
-    house_to_add = input(
+    house_to_add_ID = input(
         "ID of the building in which the apartment is located: ")
+    house_to_add_ID = uuid.UUID(house_to_add_ID)
 
     for house in houses_list:
-        if house.house_number == house_to_add:
+        if house.ID == house_to_add_ID:
             new_flat = temp_flat.register_new_flat(house, flats_list)
             if new_flat != False:
                 flats_list.append(new_flat)
@@ -98,25 +99,17 @@ def main_menu():
 def full_list_of_apartments(flats_list):
     print("_____________________________________\n")
     for flat in flats_list:
-        a = flat.get_house()
-        b = flat.flat_number()
-        c = flat.floor()
-        d = flat.get_ID()
-        print(f"House number: {a}\nFlat number: {b}\nFloor: {c}\nID: {d}")
+        flat.print_info()
 
 
 def full_houses_list(houses_list):
     print("_____________________________________\n")
     for house in houses_list:
-        a = house.get_ID()
-        b = house.get_address()
-        c = house.get_house_number()
-        d = house.get_floors()
-        print(f"House ID: {a}\nAddress: {b}\nHouse number: {c}\nFloors: {d}")
+        house.print_info()
 
 
 temp_house = House(0, 0, 0, 0, 0, 0)
-temp_flat = Flat(0, 0, 0, 0, 0)
+temp_flat = Flat(0, 0, 0, 0, 0, 0)
 temp_resident = Resident(0, 0, 0, 0, 0, 0, 0, 0)
 
 houses_list = []
@@ -137,14 +130,14 @@ while not ex:
         ex = True
 
     elif action == '1':  # Add a house
-        new_house = temp_house.register_new_house()
+        new_house = temp_house.register_new_house(houses_list)
         houses_list.append(new_house)
 
     elif action == '2':  # Delete house
         delete_house(houses_list)
 
     elif action == '3':  # Add an apartment
-        add_an_apartment(flats_list)
+        add_an_apartment(houses_list, flats_list)
 
     elif action == '4':  # Delete an apartment
         delete_an_apartment(flats_list)
@@ -162,13 +155,10 @@ while not ex:
         print("")
 
     elif action == '9':  # Display full list of houses
-        print("\nTotal houses in the database: ", len(houses_list))
-        for house in houses_list:
-            house.print_info()
+        full_houses_list(houses_list)
 
     elif action == '10':  # Display the full list of apartments
-        for house in houses_list:
-            house.print_info()
+        full_list_of_apartments(flats_list)
 
     elif action == '11':  # Display information about a specific apartment
         print("")
