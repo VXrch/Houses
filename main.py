@@ -42,7 +42,7 @@ def add_an_apartment(houses_list, flats_list):
             new_flat = temp_flat.register_new_flat(house, flats_list)
             if new_flat != False:
                 flats_list.append(new_flat)
-            return
+                # Add flat to house
 
 
 def delete_an_apartment(flats_list):

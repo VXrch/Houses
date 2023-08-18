@@ -30,6 +30,9 @@ class House:
     def get_floors(self):
         return self.floors
 
+    def attach_flat(self, flat_ID):
+        self.flats.append(flat_ID)
+
     def print_info(self):
         print("__________________________________________________\n")
         print(
@@ -108,6 +111,8 @@ class Flat:
                     return False
 
             floor = int(input("The apartment is located on the floor: "))
+            print("HOUSE FLOORS = ", house.floors,
+                  "\nHOUSE TYPE = ", type(house.floors))
             if floor > 0 and floor <= house.floors:
                 print(
                     f"Wrong floor! There are only {house.floors} floors in this building!")
@@ -171,9 +176,9 @@ class Resident:
             gender = input("Gender: ")
             phone_number = input("Phone number: ")
             email = input("Email: ")
-            ID = uuid.uuid4()
+            Id = uuid.uuid4()
 
-            new_resident = Resident(ID, name, surname, age,
+            new_resident = Resident(Id, name, surname, age,
                                     gender, phone_number, email, flat_number)
 
             return new_resident
