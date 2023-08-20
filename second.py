@@ -18,18 +18,6 @@ class House:
 
         self.flats = []
 
-    def get_ID(self):
-        return self.ID
-
-    def get_house_number(self):
-        return self.house_number
-
-    def get_address(self):
-        return self.address
-
-    def get_floors(self):
-        return self.floors
-
     def attach_flat(self, flat_ID):
         self.flats.append(flat_ID)
 
@@ -94,15 +82,6 @@ class Flat:
         self.area = area
         self.residents = []
 
-    def get_ID(self):
-        return self.ID
-
-    def get_flat_number(self):
-        return self.flat_number
-
-    def get_floor(self):
-        return self.floor
-
     def print_info(self):
         print("__________________________________________________________________________________________\n")
         print(
@@ -116,7 +95,7 @@ class Flat:
     def print_short_info(self):
         print("__________________________________________________________________________________________\n")
         print(
-            f"Flat id: {self.ID}\nHouse number: {self.house.house_number}\nHouse address: {self.house_address}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nResidents: [", len(self.residents), "]")
+            f"Flat id: {self.ID}\nHouse number: {self.house.house_number}\nHouse address: {self.house.address}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nResidents: [", len(self.residents), "]")
 
     def attach_resident(self, resident_ID):
         self.residents.append(resident_ID)
@@ -169,18 +148,6 @@ class Resident:
         self.phone_number = phone_number
         self.email = email
         self.flat_number = flat_number
-
-    def get_ID(self):
-        return self.ID
-
-    def get_name(self):
-        return self.name
-
-    def get_surname(self):
-        return self.surname
-
-    def get_age(self):
-        return self.age
 
     def print_info(self):
         print("__________________________________________________________________________________________\n")
