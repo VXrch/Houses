@@ -34,14 +34,25 @@ class House:
         self.flats.append(flat_ID)
 
     def print_info(self):
-        print("__________________________________________________\n")
+        print("__________________________________________________________________________________________\n")
         print(
-            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nFlats: {self.flats}")
+            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nFlats: [", len(self.flats), "]")
+
+        itr = 1
+        for flat in self.flats:
+            print(f"[{itr}] - {flat.ID}")
+            itr += 1
+
+    def print_short_info(self):
+        print("__________________________________________________________________________________________\n")
+        print(
+            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nFlats: [", len(self.flats), "]")
 
     def register_new_house(self, houses_list):
 
         try:
-            print("__________________________________________________\n")
+            print(
+                "__________________________________________________________________________________________\n")
             house_nmbr = input("House number: ")
             address = input("House adress: ")
             for house in houses_list:
@@ -93,29 +104,38 @@ class Flat:
         return self.floor
 
     def print_info(self):
-        print("__________________________________________________\n")
+        print("__________________________________________________________________________________________\n")
         print(
-            f"Flat id: {self.ID}\nHouse address: {self.house.address}\nHouse number: {self.house.house_number}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: {self.residents}")
+            f"Flat id: {self.ID}\nHouse address: {self.house.address}\nHouse number: {self.house.house_number}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nRooms: {self.rooms}\nArea: {self.area}\nResidents: [", len(self.residents), "]")
+
+        itr = 1
+        for resident in self.residents:
+            print(f"[{itr}] - {resident.ID}")
+            itr += 1
+
+    def print_short_info(self):
+        print("__________________________________________________________________________________________\n")
+        print(
+            f"Flat id: {self.ID}\nHouse number: {self.house.house_number}\nHouse address: {self.house_address}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nResidents: [", len(self.residents), "]")
 
     def attach_resident(self, resident_ID):
         self.residents.append(resident_ID)
 
-    def register_new_flat(self, house, flats_list):
+    def register_new_flat(self, my_house):
         try:
-            print("__________________________________________________\n")
+            print(
+                "__________________________________________________________________________________________\n")
 
             flat_nmbr = int(input("Flat number: "))
-            for flat in flats_list:
+            for flat in my_house.flats:
                 if flat.flat_number == flat_nmbr:
                     print("This flat is already listed!")
                     return False
 
             floor = int(input("The apartment is located on the floor: "))
-            print("HOUSE FLOORS = ", house.floors,
-                  "\nHOUSE TYPE = ", type(house.floors))
-            if floor > 0 and floor <= house.floors:
+            if 0 > floor > my_house.floors:
                 print(
-                    f"Wrong floor! There are only {house.floors} floors in this building!")
+                    f"Wrong floor! There are only {my_house.floors} floors in this building!")
                 return False
 
             rooms = int(input("Number of rooms: "))
@@ -130,7 +150,7 @@ class Flat:
 
             Id = uuid.uuid4()
 
-            new_flat = Flat(Id, house, flat_nmbr, floor, rooms, area)
+            new_flat = Flat(Id, my_house, flat_nmbr, floor, rooms, area)
 
             return new_flat
         except Exception as err:
@@ -163,13 +183,14 @@ class Resident:
         return self.age
 
     def print_info(self):
-        print("__________________________________________________\n")
+        print("__________________________________________________________________________________________\n")
         print(
             f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nGender: {self.gender}\nPhone number: {self.phone_number}\nEmail: {self.email}\nFlat number: {self.flat_number}")
 
     def register_new_resident(self, flat_number):
         try:
-            print("__________________________________________________\n")
+            print(
+                "__________________________________________________________________________________________\n")
             name = input("Name: ")
             surname = input("Surname: ")
             age = int(input("Age: "))
