@@ -18,8 +18,8 @@ class House:
 
         self.flats = []
 
-    def attach_flat(self, flat_ID):
-        self.flats.append(flat_ID)
+    def attach_flat(self, flat):
+        self.flats.append(flat)
 
     def print_info(self):
         print("__________________________________________________________________________________________\n")
@@ -73,13 +73,14 @@ class House:
 class Flat:
     """Describes the apartment and stores information about its residents"""
 
-    def __init__(self, ID, house, flat_number, floor, rooms, area):
+    def __init__(self, ID, house, flat_number, floor, rooms, area, house_ID):
         self.ID = ID
         self.house = house
         self.flat_number = flat_number
         self.floor = floor
         self.rooms = rooms
         self.area = area
+        self.house_ID = house_ID
         self.residents = []
 
     def print_info(self):
@@ -97,8 +98,8 @@ class Flat:
         print(
             f"Flat id: {self.ID}\nHouse number: {self.house.house_number}\nHouse address: {self.house.address}\nFlat number: {self.flat_number}\nFloor: {self.floor}\nResidents: [", len(self.residents), "]")
 
-    def attach_resident(self, resident_ID):
-        self.residents.append(resident_ID)
+    def attach_resident(self, resident):
+        self.residents.append(resident)
 
     def register_new_flat(self, my_house):
         try:
@@ -129,7 +130,7 @@ class Flat:
 
             Id = uuid.uuid4()
 
-            new_flat = Flat(Id, my_house, flat_nmbr, floor, rooms, area)
+            new_flat = Flat(Id, my_house, flat_nmbr, floor, rooms, area, 0)
 
             return new_flat
         except Exception as err:
@@ -139,7 +140,7 @@ class Flat:
 class Resident:
     """Description of the person"""
 
-    def __init__(self, ID, name, surname, age, gender, phone_number, email, flat_number):
+    def __init__(self, ID, name, surname, age, gender, phone_number, email, flat_number, flat_ID):
         self.ID = ID
         self.name = name
         self.surname = surname
@@ -148,11 +149,17 @@ class Resident:
         self.phone_number = phone_number
         self.email = email
         self.flat_number = flat_number
+        self.flat_ID = flat_ID
 
     def print_info(self):
         print("__________________________________________________________________________________________\n")
         print(
             f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nGender: {self.gender}\nPhone number: {self.phone_number}\nEmail: {self.email}\nFlat number: {self.flat_number}")
+
+    def print_short_info(self):
+        print("__________________________________________________________________________________________\n")
+        print(
+            f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nFlat number: {self.flat_number}")
 
     def register_new_resident(self, flat_number):
         try:
@@ -167,7 +174,7 @@ class Resident:
             Id = uuid.uuid4()
 
             new_resident = Resident(Id, name, surname, age,
-                                    gender, phone_number, email, flat_number)
+                                    gender, phone_number, email, flat_number, 0)
 
             return new_resident
         except Exception as err:
