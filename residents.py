@@ -3,7 +3,7 @@ import uuid
 
 
 def resident_menu(my_house, houses_list):
-    input("Press Enter to continue...")
+
     print("\n__________________________________________________________________________________________\n")
     print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
     print()
@@ -30,16 +30,16 @@ def resident_menu(my_house, houses_list):
     action = input("/(o_o)\\  ")
 
     if action == '0':
-        ex = True
+        print()
 
     elif action == '1':  # Add new resident
-        add_new_resident(my_house)
+        my_house = add_new_resident(my_house)
 
     elif action == '2':  # Remove a resident
-        delete_resident(my_house)
+        my_house = delete_resident(my_house)
 
     elif action == '3':  # Change resident info
-        change_resident_info(my_house)
+        my_house = change_resident_info(my_house)
 
     elif action == '4':  # Display all residents
         residents_list = residents_in_one_house(my_house)
@@ -81,24 +81,40 @@ def resident_menu(my_house, houses_list):
         residents_list = residents_in_all_houses(houses_list)
         display_specific_resident(residents_list)
 
+    return my_house, houses_list
+
 
 def add_new_resident(my_house):
+    try:
+        found = False
+        temp_resident = Resident(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    temp_resident = Resident(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        for flat in my_house.flats:
+            flat.print_short_info()
 
-    for flat in my_house.flats:
-        flat.print_short_info()
+        flat_to_add = input(
+            "Enter the ID of the apartment to which the new resident will be added: ")
+        flat_to_add = uuid.UUID(flat_to_add)
 
-    flat_to_add = input(
-        "Enter the ID of the apartment to which the new tenant will be added: ")
-    flat_to_add = uuid.UUID(flat_to_add)
+        for flat in my_house.flats:
+            if flat.ID == flat_to_add:
+                new_resident = temp_resident.register_new_resident(
+                    flat.flat_number)
+                new_resident.flat_ID = flat.ID
+                flat.attach_resident(new_resident)
+                found = True
 
-    for flat in my_house.flats:
-        if flat.ID == flat_to_add:
-            new_resident = temp_resident.register_new_resident(
-                flat.flat_number)
-            new_resident.flat_ID = flat.ID
-            flat.attach_resident(new_resident)
+        if found == False:
+            print("Apartment in not found! Incorrect ID!")
+        else:
+            print("Successed!")
+
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
+    finally:
+        return my_house
 
 
 def delete_resident(my_house):
@@ -110,34 +126,30 @@ def delete_resident(my_house):
         flat_to_delete_resident_id = input("Enter apartment ID: ")
         flat_to_delete_resident_id = uuid.UUID(flat_to_delete_resident_id)
 
-        deleted_flat = None
+        flat_to_delete_resident = None
 
         for flat in my_house.flats:
             if flat.ID == flat_to_delete_resident_id:
-                deleted_flat = flat
-                break
+                flat_to_delete_resident = flat
 
-        if deleted_flat is None:
+        if flat_to_delete_resident is None:
             print("Flat is not found!")
-            return
+        else:
+            print("\nChoose resident to delete: ")
+            for resident in flat_to_delete_resident.residents:
+                resident.print_info()
 
-        print("\nChoose resident to delete: ")
-        for resident in deleted_flat.residents:
-            resident.print_info()
+            successfully_deleted = None
 
-        input("Press Enter to continue...")
-        deleted_resident = None
+            resident_to_delete_id = input("Enter resident id: ")
+            resident_to_delete_id = uuid.UUID(resident_to_delete_id)
 
-        resident_id = input("Enter resident id: ")
-        resident_id = uuid.UUID(resident_id)
+            for resident in flat_to_delete_resident.residents:
+                if resident.ID == resident_to_delete_id:
+                    flat_to_delete_resident.residents.remove(resident)
+                    successfully_deleted = True
 
-        for resident in deleted_flat.residents:
-            if resident.ID == resident_id:
-                deleted_flat.residents.remove(resident)
-                deleted_resident = resident
-                break
-
-        if deleted_resident is None:
+        if successfully_deleted is None:
             text = ""
             print(f"{text:.^5} Resident is not found! Try again later! {text:.^5}")
         else:
@@ -145,6 +157,8 @@ def delete_resident(my_house):
             print(f"{text:.^5} Resident was successfully deleted! {text:.^5}")
     except Exception as err:
         print("ERROR ---> ", err)
+    finally:
+        return my_house
 
 
 def change_resident_info(my_house):
@@ -173,15 +187,21 @@ def change_resident_info(my_house):
                     resident.surname = new_surname
 
             elif action == '3':  # Age
-                new_age = input(
-                    "Enter resident's new age (or [exit] to exit): ")
+                try:
+                    new_age = int(input(
+                        "Enter resident's new age (or [0] to exit): "))
 
-                if new_age != 'exit':
-                    resident.age = new_age
+                    if new_age != 0:
+                        resident.age = new_age
+                except TypeError:
+                    print("It isn't number!")
+                except Exception as err:
+                    print("ERROR -----> ", err)
 
             elif action == '4':  # Phone number
                 new_phone_number = input(
                     "Enter resident's new phone number (or [exit] to exit): ")
+                new_phone_number = new_phone_number.lower()
 
                 if new_phone_number != 'exit':
                     resident.phone_number = new_phone_number
@@ -190,26 +210,26 @@ def change_resident_info(my_house):
                 new_email = input(
                     "Enter new resident's email (or [exit] to exit): ")
 
-                if new_email != 'exit':
+                if new_email != 'exit' or new_email != 'Exit':
                     resident.email = new_email
 
             elif action == '6':  # Flat number
                 try:
                     new_flat_number = int(input(
-                        "Enter new resident's name (or [exit] to exit): "))
+                        "Enter new resident's name (or [0] to exit): "))
 
-                    for flat in my_house.flats:
-                        if flat.flat_number == new_flat_number:
-                            resident.flat_number = new_flat_number
+                    if new_flat_number != 0:
+                        for flat in my_house.flats:
+                            if flat.flat_number == new_flat_number:
+                                resident.flat_number = new_flat_number
 
                 except TypeError:
                     print("It isn't number!")
-                    return False
                 except Exception as err:
                     print("ERROR: ", err)
-                    return False
             else:
                 print("That option is not on the menu!")
+    return my_house
 
 
 def display_full_residents_list(residents_list):
@@ -271,6 +291,8 @@ def residents_in_all_houses(houses_list):
             for resident in flat.residents:
                 residents_list.append(resident)
 
+    return residents_list
+
 
 def residents_in_one_house(my_house):
     residents_list = []
@@ -278,3 +300,5 @@ def residents_in_one_house(my_house):
     for flat in my_house.flats:
         for resident in flat.residents:
             residents_list.append(resident)
+
+    return residents_list

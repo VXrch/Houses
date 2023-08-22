@@ -5,45 +5,51 @@ from flats import flat_menu
 from residents import resident_menu
 
 
-def main_menu():
+def main_menu(houses_list, my_house):
 
-    print("[1] - house menu")
-    print("[2] - flats menu")
-    print("[3] - residents menu")
-    print("[4] - Save information to a file")
-    print("[5] - Uploading information from a file")
-    print("__________________________________________________________________________________________\n")
-    action = input("/(o_o)\\  ")
+    ext = False
 
-    if action == '1':  # house menu
-        house_menu(houses_list, my_house)
+    while ext == False:
 
-    elif action == '2':  # flats menu
-        flat_menu(houses_list, my_house)
+        print("__________________________________________________________________________________________\n")
+        print("\n[1] - house menu")
+        print("[2] - flats menu")
+        print("[3] - residents menu")
+        print("[4] - Save information to a file")
+        print("[5] - Uploading information from a file")
+        print("[0] - Exit")
+        print("__________________________________________________________________________________________\n")
+        action = input("/(o_o)\\  ")
 
-    elif action == '3':  # residents menu
-        resident_menu(my_house, houses_list)
+        if action == '1':  # house menu
+            my_house, houses_list = house_menu(my_house, houses_list)
 
-    elif action == '4':  # Save information to a file
-        write_data_to_file(houses_list)
+        elif action == '2':  # flats menu
+            my_house, houses_list = flat_menu(my_house, houses_list)
 
-    elif action == '5':  # Uploading information from a file
-        read_data_from_file()
+        elif action == '3':  # residents menu
+            my_house, houses_list = resident_menu(my_house, houses_list)
 
-    elif action == '0':  # Exit
-
-        save_info = input(
-            "Would you like to save information before exit?\m[Y][N]\n  ")
-        save_info = save_info.lower()
-
-        if save_info == 'y':
+        elif action == '4':  # Save information to a file
             write_data_to_file(houses_list)
+
+        elif action == '5':  # Uploading information from a file
+            read_data_from_file()
+
+        elif action == '0':  # Exit
+
+            save_info = input(
+                "Would you like to save information before exit?\m[Y][N]\n  ")
+            save_info = save_info.lower()
+
+            if save_info == 'y':
+                write_data_to_file(houses_list)
+            else:
+                print("Ok! Have a nice day!")
+
+            ext = True
         else:
-            print("Ok! Have a nice day!")
-        return True
-    else:
-        print("Wrong choice!")
-    return False
+            print("Wrong choice!")
 
 
 temp_resident = Resident(0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -64,8 +70,4 @@ else:
     my_house = choose_house_to_work_with(houses_list)
 
 
-ex = False
-while not ex:
-
-    input("Press Enter to continue...")
-    ex = main_menu()
+main_menu(houses_list, my_house)

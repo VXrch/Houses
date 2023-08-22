@@ -96,7 +96,7 @@ def read_data_from_file():
             for flat in house.flats:
                 for rsdnt in lisr_residents:
                     if rsdnt.flat_ID == flat.ID:
-                        flat.attach_resident(resident)
+                        flat.attach_resident(rsdnt)
 
         for house in list_houses:
             house.ID = uuid.UUID(house.ID)
@@ -109,4 +109,4 @@ def read_data_from_file():
 
     except Exception as err:
         print(f"ERROR: {err}")
-        return False
+        return []

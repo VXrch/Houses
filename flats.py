@@ -2,96 +2,94 @@ from second import Flat
 import uuid
 
 
-def flat_menu(houses_list, my_house):
+def flat_menu(my_house, houses_list):
 
-    ex = False
+    print("\n__________________________________________________________________________________________\n")
+    print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
+    print()
 
-    while ex == False:
-        input("Press Enter to continue...")
-        print("\n__________________________________________________________________________________________\n")
-        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
+    print("[1] - Add an apartment")
+    print("[2] - Delete an apartment")
+    print("[3] - Change apartment info")
+    print()
+    print("Display only in this house: ")
+    print("[4] - Display the full list of apartments")
+    print("[5] - Display information about a specific apartment")
+    print("[6] - Display information about apartments on a particular floor")
+    print("[7] - Display information about apartments of the same type")
+    print("[8] - Display information about apartments by area")
+    print()
+    print("Display in all houses: ")
+    print("[9] - Display the full list of apartments")
+    print("[10] - Display information about a specific apartment")
+    print("[11] - Display information about apartments on a particular floor")
+    print("[12] - Display information about apartments of the same type")
+    print("[13] - Display information about apartments by area")
+    print("[0] - Go back")
+    print("__________________________________________________________________________________________\n")
+    action = input("/(o_o)\\  ")
+
+    if action == '0':
         print()
 
-        print("[1] - Add an apartment")
-        print("[2] - Delete an apartment")
-        print("[3] - Change apartment info")
-        print()
-        print("Display only in this house: ")
-        print("[4] - Display the full list of apartments")
-        print("[5] - Display information about a specific apartment")
-        print("[6] - Display information about apartments on a particular floor")
-        print("[7] - Display information about apartments of the same type")
-        print("[8] - Display information about apartments by area")
-        print()
-        print("Display in all houses: ")
-        print("[9] - Display the full list of apartments")
-        print("[10] - Display information about a specific apartment")
-        print("[11] - Display information about apartments on a particular floor")
-        print("[12] - Display information about apartments of the same type")
-        print("[13] - Display information about apartments by area")
-        print("[0] - Go back")
-        print("__________________________________________________________________________________________\n")
-        action = input("/(o_o)\\  ")
+    elif action == '1':  # Add an apartment
+        my_house = add_an_apartment(my_house)
 
-        if action == '0':
-            ex = True
+    elif action == '2':  # Delete an apartment
+        my_house = delete_an_apartment(my_house)
 
-        elif action == '1':  # Add an apartment
-            add_an_apartment(my_house)
+    elif action == '3':  # Change apartment info
+        my_house = change_apartment_info(my_house)
 
-        elif action == '2':  # Delete an apartment
-            delete_an_apartment(my_house)
+    elif action == '4':  # Display the full list of apartments
+        flats_list = flats_in_this_house(my_house)
+        full_list_of_apartments(flats_list)
 
-        elif action == '3':  # Change apartment info
-            change_apartment_info(my_house)
+    elif action == '5':  # Display information about a specific apartment
+        flats_list = flats_in_this_house(my_house)
+        display_specific_apartment(flats_list)
 
-        elif action == '4':  # Display the full list of apartments
-            flats_list = flats_in_this_house(my_house)
-            full_list_of_apartments(flats_list)
+    elif action == '6':  # Display information about apartments on a particular floor
+        flats_list = flats_in_this_house(my_house)
+        print_by_floor(flats_list)
 
-        elif action == '5':  # Display information about a specific apartment
-            flats_list = flats_in_this_house(my_house)
-            display_specific_apartment(flats_list)
+    elif action == '7':  # Display information about apartments of the same type
+        flats_list = flats_in_this_house(my_house)
+        print_the_same_type(flats_list)
 
-        elif action == '6':  # Display information about apartments on a particular floor
-            flats_list = flats_in_this_house(my_house)
-            print_by_floor(flats_list)
-
-        elif action == '7':  # Display information about apartments of the same type
-            flats_list = flats_in_this_house(my_house)
-            print_the_same_type(flats_list)
-
-        elif action == '8':  # Display information about apartments by area
-            flats_list = flats_in_this_house(my_house)
-            print_by_area(flats_list)
+    elif action == '8':  # Display information about apartments by area
+        flats_list = flats_in_this_house(my_house)
+        print_by_area(flats_list)
 
         # (ALL HOUSES) Display the full list of apartments (ALL HOUSES)
-        elif action == '9':
-            flats_list = flats_in_all_houses(houses_list)
-            full_list_of_apartments(houses_list)
+    elif action == '9':
+        flats_list = flats_in_all_houses(houses_list)
+        full_list_of_apartments(houses_list)
 
         # (ALL HOUSES) Display information about a specific apartment
-        elif action == '10':
-            flats_list = flats_in_all_houses(houses_list)
-            display_specific_apartment(flats_list)
+    elif action == '10':
+        flats_list = flats_in_all_houses(houses_list)
+        display_specific_apartment(flats_list)
 
         # (ALL HOUSES) Display information about apartments on a particular floor
-        elif action == '11':
-            flats_list = flats_in_all_houses(houses_list)
-            print_by_floor(flats_list)
+    elif action == '11':
+        flats_list = flats_in_all_houses(houses_list)
+        print_by_floor(flats_list)
 
         # (ALL HOUSES) Display information about apartments of the same type
-        elif action == '12':
-            flats_list = flats_in_all_houses(houses_list)
-            print_the_same_type(flats_list)
+    elif action == '12':
+        flats_list = flats_in_all_houses(houses_list)
+        print_the_same_type(flats_list)
 
         # (ALL HOUSES) Display information about apartments by area
-        elif action == '13':
-            flats_list = flats_in_all_houses(houses_list)
-            print_by_area(flats_list)
+    elif action == '13':
+        flats_list = flats_in_all_houses(houses_list)
+        print_by_area(flats_list)
 
-        else:
-            print("That option is not on the menu!")
+    else:
+        print("That option is not on the menu!")
+
+    return my_house, houses_list
 
 
 def add_an_apartment(my_house):
@@ -102,14 +100,13 @@ def add_an_apartment(my_house):
         new_flat.house_ID = my_house.ID
         my_house.attach_flat(new_flat)
 
+    return my_house
+
 
 def delete_an_apartment(my_house):
     try:
         print("\nChoose flat to delete: ")
         full_list_of_apartments(my_house.flats)
-
-        input("Press Enter to continue...")
-        deleted = False
 
         choice = input("Enter flat id: ")
         choice_uuid = uuid.UUID(choice)
@@ -119,7 +116,7 @@ def delete_an_apartment(my_house):
                 my_house.flats.pop(flat_number)
                 deleted = True
 
-        if not deleted:
+        if deleted is None:
             text = ""
             print(f"{text:.^5} Flat is not found! Try again later! {text:.^5}")
         else:
@@ -127,6 +124,8 @@ def delete_an_apartment(my_house):
             print(f"{text:.^5} Flat was successfully deleted! {text:.^5}")
     except Exception as err:
         print("ERROR ---> ", err)
+    finally:
+        return my_house
 
 
 def change_apartment_info(my_house):
@@ -144,59 +143,75 @@ def change_apartment_info(my_house):
         try:
             if flat.ID == flat_to_change_info:
                 if info_to_change == '1':  # Flat number
+                    try:
 
-                    new_flat_number = int(
-                        input("Enter new flat number (or [exit] to exit): "))
+                        new_flat_number = int(
+                            input("Enter new flat number (or [0] to exit): "))
 
-                    for flat in my_house.flats:
-                        if flat.flat_number == new_flat_number:
-                            print("This flat is already listed!")
-                            return False
+                        found_the_same = None
 
-                    flat.flat_number = new_flat_number
+                        for flat in my_house.flats:
+                            if flat.flat_number == new_flat_number:
+                                print("This flat is already listed!")
+                                found_the_same = True
+
+                        if found_the_same is None:
+                            flat.flat_number = new_flat_number
+                    except TypeError:
+                        print("Flat number must be a number!")
+                    except Exception as err:
+                        print("ERROR ----->  ", err)
 
                 elif info_to_change == '2':  # Floor
+                    try:
+                        new_flat_floor = int(
+                            input("Enter new flat number (or [0] to exit): "))
 
-                    new_flat_floor = int(
-                        input("Enter new flat number (or [exit] to exit): "))
-
-                    if 0 > new_flat_floor > my_house.floors:
-                        print(
-                            f"Wrong floor! There are only {my_house.floors} floors in this building!")
-                        return False
-
-                    flat.floor = new_flat_floor
+                        if new_flat_floor == 0:
+                            print()
+                        elif new_flat_floor > my_house.floors:
+                            print(
+                                f"Wrong floor! There are only {my_house.floors} floors in this building!")
+                        else:
+                            flat.floor = new_flat_floor
+                    except TypeError:
+                        print("Flat number must be a number!")
+                    except Exception as err:
+                        print("ERROR ----->  ", err)
 
                 elif info_to_change == '3':  # Rooms
+                    try:
+                        new_flat_rooms = int(
+                            input("Enter new flat number (or [0] to exit): "))
 
-                    new_flat_rooms = int(
-                        input("Enter new flat number (or [exit] to exit): "))
-
-                    if new_flat_rooms <= 0:
-                        print("An apartment cannot have less than 1 room!")
-                        return False
-
-                    flat.rooms = new_flat_rooms
+                        if new_flat_rooms != 0:
+                            flat.rooms = new_flat_rooms
+                    except TypeError:
+                        print("Flat number must be a number!")
+                    except Exception as err:
+                        print("ERROR ----->  ", err)
 
                 elif info_to_change == '4':  # Area
+                    try:
+                        new_flat_area = float(
+                            input("Enter new flat number (or [0] to exit): "))
 
-                    new_flat_area = float(
-                        input("Enter new flat number (or [exit] to exit): "))
+                        if new_flat_area != 0:
+                            flat.area = new_flat_area
+                    except TypeError:
+                        print("Flat number must be a number!")
+                    except Exception as err:
+                        print("ERROR ----->  ", err)
 
-                    if new_flat_area <= 0:
-                        print("The apartment cannot be less than 1 square meter!")
-                        return False
-
-                    flat.area = new_flat_area
                 else:
                     print("That option is not on the menu!")
 
         except TypeError:
             print("It isn't number!")
-            return False
         except Exception as err:
             print("ERROR: ", err)
-            return False
+
+    return my_house
 
 
 def full_list_of_apartments(flats_list):

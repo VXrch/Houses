@@ -2,57 +2,61 @@ from second import House
 import uuid
 
 
-def house_menu(houses_list, my_house):
+def house_menu(my_house, houses_list):
 
-    ex = False
+    print("\n__________________________________________________________________________________________\n")
+    print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
+    print()
+    print("[1] - Add a house")
+    print("[2] - Delete house")
+    print("[3] - Change house info")
+    print("[4] - Change the house to work")
+    print()
+    print("[5] - Display full list of houses")
+    print("[6] - Display information about a specific house")
+    print("[7] - Display information about houses by communication access")
+    print("[8] - Display information about houses by departmental affiliation")
+    print("[8] - Display house to work")
+    print("[0] - Go back")
+    print("__________________________________________________________________________________________\n")
+    action = input("/(o_o)\\  ")
 
-    while ex == False:
-        input("Press Enter to continue...")
-        print("\n__________________________________________________________________________________________\n")
-        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
+    if action == '0':
         print()
-        print("[1] - Add a house")
-        print("[2] - Delete house")
-        print("[3] - Change house info")
-        print("[4] - Change the house to work")
-        print()
-        print("[5] - Display full list of houses")
-        print("[6] - Display information about a specific house")
-        print("[7] - Display information about houses by communication access")
-        print("[8] - Display information about houses by departmental affiliation")
-        print("[0] - Go back")
-        print("__________________________________________________________________________________________\n")
-        action = input("/(o_o)\\  ")
 
-        if action == '0':
-            ex = True
+    elif action == '1':  # Add a house
+        houses_list = add_new_house(houses_list)
 
-        elif action == '1':  # Add a house
-            add_new_house(houses_list)
+    elif action == '2':  # Delete house
+        houses_list = delete_house(houses_list, my_house)
 
-        elif action == '2':  # Delete house
-            delete_house(houses_list, my_house)
+    elif action == '3':  # Change house info
+        houses_list = change_house_info(houses_list)
 
-        elif action == '3':  # Change house info
-            change_house_info(houses_list)
+    elif action == '4':  # Change the house to work
+        my_new_house = change_house_to_work_with(houses_list)
+        my_house = my_new_house
+        my_house.print_info()
 
-        elif action == '4':  # Change the house to work
-            my_house = change_house_to_work_with(houses_list)
+    elif action == '5':  # Display full list of houses
+        full_houses_list(houses_list)
 
-        elif action == '5':  # Display full list of houses
-            full_houses_list(houses_list)
+    elif action == '6':  # Display information about a specific house
+        display_info_about_specific_house(houses_list)
 
-        elif action == '6':  # Display information about a specific house
-            display_info_about_specific_house(houses_list)
+    elif action == '7':  # Display information about houses by communication access
+        print_by_communication_access(houses_list)
 
-        elif action == '7':  # Display information about houses by communication access
-            print_by_communication_access(houses_list)
+    elif action == '8':  # Display information about houses by departmental affiliation
+        print_by_departmental_affiliation(houses_list)
 
-        elif action == '8':  # Display information about houses by departmental affiliation
-            print_by_departmental_affiliation(houses_list)
+    elif action == '9':  # Display my house
+        my_house.print_info()
 
-        else:
-            print("That option is not on the menu!")
+    else:
+        print("That option is not on the menu!")
+
+    return my_house, houses_list
 
 
 def add_new_house(houses_list):
@@ -61,6 +65,8 @@ def add_new_house(houses_list):
     new_house = temp_house.register_new_house(houses_list)
     houses_list.append(new_house)
 
+    return houses_list
+
 
 def delete_house(houses_list, my_house):
     try:
@@ -68,29 +74,30 @@ def delete_house(houses_list, my_house):
         print("\nChoose house to delete: ")
         full_houses_list(houses_list)
 
-        input("Press Enter to continue...")
-        deleted = False
-
         choice = input("Enter house id: ")
         choice_uuid = uuid.UUID(choice)
 
         if choice == my_house.ID:
             print("You can't delete a house that's currently in robot. Change the active house to another one and try again!")
-            return False
-
-        for house_number, house in enumerate(houses_list):
-            if house.ID == choice_uuid:
-                houses_list.pop(house_number)
-                deleted = True
-
-        if not deleted:
-            text = ""
-            print(f"{text:.^5} House is not found! Try again later! {text:.^5}")
         else:
-            text = ""
-            print(f"{text:.^5} House was successfully deleted! {text:.^5}")
+            for house_number, house in enumerate(houses_list):
+                if house.ID == choice_uuid:
+                    houses_list.pop(house_number)
+                    deleted = True
+
+            if not deleted:
+                text = ""
+                print(f"{text:.^5} House is not found! Try again later! {text:.^5}")
+            else:
+                text = ""
+                print(f"{text:.^5} House was successfully deleted! {text:.^5}")
+
+    except TypeError:
+        print("Wrong type!")
     except Exception as err:
         print("ERROR ---> ", err)
+    finally:
+        return houses_list
 
 
 def change_house_info(houses_list):
@@ -107,7 +114,6 @@ def change_house_info(houses_list):
             if info_to_change == '1':  # House number
                 new_house_number = input(
                     "Enter new house number (or [exit] to exit): ")
-                new_house_number = new_house_number.lower()
 
                 if new_house_number != 'exit':
                     house.house_number = new_house_number
@@ -115,7 +121,6 @@ def change_house_info(houses_list):
             elif info_to_change == '2':  # Address
                 new_house_address = input(
                     "Enter new house address (or [exit] to exit): ")
-                new_house_address = new_house_address.lower()
 
                 if new_house_address != 'exit':
                     house.address = new_house_address
@@ -127,12 +132,11 @@ def change_house_info(houses_list):
 
                     if new_house_floors > 0:
                         house.floors = new_house_floors
+
                 except TypeError:
-                    print("It isn't number!")
-                    return False
+                    print("Wrong type! You must enter a number!")
                 except Exception as err:
                     print("ERROR: ", err)
-                    return False
 
             elif info_to_change == '4':  # Communication access
                 new_house_com_ac = input(
@@ -152,6 +156,8 @@ def change_house_info(houses_list):
             else:
                 print("That option is not on the menu!")
 
+    return houses_list
+
 
 def choose_house_to_work_with(houses_list):
 
@@ -159,9 +165,10 @@ def choose_house_to_work_with(houses_list):
 
     while not ext:
 
-        print("|-_-_-_-_-_-_-_---|> Welcome <|---_-_-_-_-_-_-_-|")
-
         full_houses_list(houses_list)
+        print("")
+        print("|-_-_-_-_-_-_-_---|> Welcome <|---_-_-_-_-_-_-_-|")
+        print("")
 
         house_to_work = input("Enter house id to work with: ")
         house_to_work = uuid.UUID(house_to_work)
@@ -183,6 +190,7 @@ def change_house_to_work_with(houses_list):
 
     for house in houses_list:
         if house.ID == house_to_work:
+            print("House was found!")
             return house
 
 
