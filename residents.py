@@ -240,7 +240,7 @@ def display_full_residents_list(residents_list):
 def display_specific_resident(residents_list):
     display_full_residents_list(residents_list)
 
-    resident_to_display = ("Select resident to display (enter ID): ")
+    resident_to_display = input("Select resident to display (enter ID): ")
     resident_to_display = uuid.UUID(resident_to_display)
 
     for rsdnt in residents_list:
