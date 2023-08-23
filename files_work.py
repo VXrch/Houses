@@ -1,33 +1,46 @@
-from second import House, Resident, Flat
+from second import House, Resident, Flat, City
 import uuid
 import csv
 
 
-def write_data_to_file(houses_list):
+def write_data_to_file(citys_list):
 
     try:
+        houses_list = []
         flats_list = []
         residents_list = []
         data_folder = 'Data_of_program'
 
-        for house in houses_list:
+        for city in citys_list:
+            for house in city.houses:
+                house.city_ID = city.ID
+                houses_list.append(flat)
 
-            for flat in house.flats:
-                flat.house_ID = house.ID
-                flats_list.append(flat)
+                for flat in house.flats:
+                    flat.house_ID = house.ID
+                    flats_list.append(flat)
 
-                for resident in flat.residents:
-                    resident.flat_ID = flat.ID
-                    residents_list.append(resident)
+                    for resident in flat.residents:
+                        resident.flat_ID = flat.ID
+                        residents_list.append(resident)
+
+        with open(f'{data_folder}/citys.csv', 'w', newline='', encoding='utf-8') as citys_file:
+            csv_writer = csv.writer(citys_file)
+            csv_writer.writerow(['ID', 'city_name', 'country', 'region',
+                                'year_of_foundation', 'population', 'area', 'population_density'])
+
+            for city in citys_list:
+                csv_writer.writerow(
+                    [city.ID, city.city_name, city.country, city.region, city.year_of_foundation, city.population, city.area, city.population_density])
 
         with open(f'{data_folder}/houses.csv', 'w', newline='', encoding='utf-8') as houses_file:
             csv_writer = csv.writer(houses_file)
             csv_writer.writerow(['ID', 'house_number', 'address', 'floors',
-                                'communication_access', 'departmental_affiliation'])
+                                'communication_access', 'departmental_affiliation', 'city_ID'])
 
             for house in houses_list:
                 csv_writer.writerow([house.ID, house.house_number, house.address, house.floors,
-                                    house.communication_access, house.departmental_affiliation])
+                                    house.communication_access, house.departmental_affiliation, house.city_ID])
 
         with open(f'{data_folder}/flats.csv', 'w', newline='', encoding='utf-8') as flats_file:
             csv_writer = csv.writer(flats_file)
@@ -56,16 +69,27 @@ def read_data_from_file():
 
     try:
         data_folder = 'Data_of_program'
-        list_flats = []
+        list_of_citys = []
         list_houses = []
+        list_flats = []
         lisr_residents = []
+
+        with open(f'{data_folder}/citys.csv', 'r', newline='', encoding='utf-8') as citys_file:
+            csv_reader = csv.reader(citys_file)
+            next(csv_reader)
+
+            for row in csv_reader:
+                city = City(row[0], row[1], row[2], row[3],
+                            row[4], row[5], row[6], row[7], row[8])
+                list_of_citys.append(city)
 
         with open(f'{data_folder}/houses.csv', 'r', newline='', encoding='utf-8') as houses_file:
             csv_reader = csv.reader(houses_file)
             next(csv_reader)
 
             for row in csv_reader:
-                house = House(row[0], row[1], row[2], row[3], row[4], row[5])
+                house = House(row[0], row[1], row[2],
+                              row[3], row[4], row[5], row[6])
                 list_houses.append(house)
 
         with open(f'{data_folder}/flats.csv', 'r', newline='', encoding='utf-8') as flats_file:
@@ -86,6 +110,12 @@ def read_data_from_file():
                     row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
                 lisr_residents.append(resident)
 
+        for city in list_of_citys:
+            for house in list_houses:
+                if city.ID == house.city_ID:
+                    city.attach_house(house)
+                    house.city = city
+
         for house in list_houses:
             for flat in list_flats:
                 if house.ID == flat.house_ID:
@@ -105,7 +135,7 @@ def read_data_from_file():
                 for rsident in flat.residents:
                     rsident.ID = uuid.UUID(rsident.ID)
 
-        return list_houses
+        return list_of_citys
 
     except Exception as err:
         print(f"ERROR: {err}")

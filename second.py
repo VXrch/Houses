@@ -4,7 +4,7 @@ import uuid
 class House:
     """Describes the house, stores information about the number of apartments and residents in it."""
 
-    def __init__(self, ID, house_number, address, floors, communication_access, departmental_affiliation):
+    def __init__(self, ID, house_number, address, floors, communication_access, departmental_affiliation, city_ID, city):
         self.ID = ID
         self.house_number = house_number
         self.address = address
@@ -17,6 +17,8 @@ class House:
         self.departmental_affiliation = departmental_affiliation
 
         self.flats = []
+        self.city_ID = city_ID
+        self.city = city
 
     def attach_flat(self, flat):
         self.flats.append(flat)
@@ -24,7 +26,7 @@ class House:
     def print_info(self):
         print("__________________________________________________________________________________________\n")
         print(
-            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nFlats: [", len(self.flats), "]")
+            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nCity: {self.city.city_name}\nFloors: {self.floors}\nCommunication access: {self.communication_access}\nDepartmental affiliation: {self.departmental_affiliation}\nFlats: [", len(self.flats), "]")
 
         itr = 1
         for flat in self.flats:
@@ -34,9 +36,9 @@ class House:
     def print_short_info(self):
         print("__________________________________________________________________________________________\n")
         print(
-            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nFloors: {self.floors}\nFlats: [", len(self.flats), "]")
+            f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nCity: {self.city.city_name}\nFloors: {self.floors}\nFlats: [", len(self.flats), "]")
 
-    def register_new_house(self, houses_list):
+    def register_new_house(self, houses_list, city):
 
         try:
             print(
@@ -63,7 +65,7 @@ class House:
             Id = uuid.uuid4()
 
             new_house = House(Id, house_nmbr, address, floors,
-                              communication_access, departmental_affiliation)
+                              communication_access, departmental_affiliation, 0, city)
 
             return new_house
         except Exception as err:
@@ -179,3 +181,69 @@ class Resident:
             return new_resident
         except Exception as err:
             print("ERROR ---> ", err)
+
+
+class City:
+    """Description of the city"""
+
+    def __init__(self, ID, city_name, country, region, year_of_foundation, population, area, population_density):
+        self.ID = ID
+        self.city_name = city_name
+        self.country = country
+        self.region = region
+        self.year_of_foundation = year_of_foundation
+        self.population = population
+        self.area = area
+        self.population_density = population_density
+
+        self.houses = []
+
+    def attach_house(self, house):
+        self.houses.append(house)
+
+    def print_info(self):
+        print("__________________________________________________________________________________________\n")
+        print(
+            f"City ID: {self.ID}\nCity name: {self.city_name}\nCountry: {self.country}\nRegion: {self.region}\nYear of foundation: {self.year_of_foundation}\nCity division: {self.population}\nArea: {self.area}\nPopulation density: {self.population_density}")
+        i = 0
+        for house in self.houses:
+            print(f"[{i}] house ID: {house.ID}")
+            i += 1
+
+    def print_short_info(self):
+        print("__________________________________________________________________________________________\n")
+        print(
+            f"City ID: {self.ID}\nCity name: {self.city_name}\nCountry: {self.country}\nRegion: {self.region}\nRegistered houses: {len(self.houses)}")
+
+    def register_new_city(self, citys_list):
+        try:
+            print(
+                "__________________________________________________________________________________________\n")
+
+            city_name = input("City name: ")
+            for city in citys_list:
+                if city.city_name == city_name:
+                    print("This town is alredy listed!")
+                    return False
+
+            country = input("Country: ")
+            region = input("Region: ")
+            year_of_foundation = input("Year of foundation: ")
+            population = input("City division: ")
+
+            area = float(input("Area in square meters: "))
+            if area < 1:
+                print("The apartment cannot be less than 1 square meter!")
+                return False
+
+            population_density = input("Population density: ")
+
+            Id = uuid.uuid4()
+
+            new_city = City(Id, city_name, country, region,
+                            year_of_foundation, population, area, population_density)
+
+        except Exception as err:
+            print("ERROR ---> ", err)
+        finally:
+            return new_city

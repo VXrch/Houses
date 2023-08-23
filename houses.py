@@ -2,7 +2,7 @@ from second import House
 import uuid
 
 
-def house_menu(my_house, houses_list):
+def house_menu(my_house, houses_list, my_city):
 
     print("\n__________________________________________________________________________________________\n")
     print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
@@ -25,7 +25,7 @@ def house_menu(my_house, houses_list):
         print()
 
     elif action == '1':  # Add a house
-        houses_list = add_new_house(houses_list)
+        houses_list = add_new_house(houses_list, my_city)
 
     elif action == '2':  # Delete house
         houses_list = delete_house(houses_list, my_house)
@@ -59,10 +59,10 @@ def house_menu(my_house, houses_list):
     return my_house, houses_list
 
 
-def add_new_house(houses_list):
-    temp_house = House(0, 0, 0, 0, 0, 0)
+def add_new_house(houses_list, my_city):
+    temp_house = House(0, 0, 0, 0, 0, 0, 0, 0)
 
-    new_house = temp_house.register_new_house(houses_list)
+    new_house = temp_house.register_new_house(houses_list, my_city)
     houses_list.append(new_house)
 
     return houses_list
@@ -107,54 +107,52 @@ def change_house_info(houses_list):
     house_to_change_info = uuid.UUID(house_to_change_info)
 
     info_to_change = input(
-        "What do you want to change?\n[1] - House number\n[2] - Address\n[3] - Floors\n[4] - Communication access\n[5] - Departmental affiliation\n")
+        "What do you want to change?\n[1] - House number\n[2] - Address\n[3] - Floors\n[4] - Communication access\n[5] - Departmental affiliation\n[0] - Go back")
 
-    for house in houses_list:
-        if house.ID == house_to_change_info:
-            if info_to_change == '1':  # House number
-                new_house_number = input(
-                    "Enter new house number (or [exit] to exit): ")
+    try:
+        for house in houses_list:
+            if house.ID == house_to_change_info:
 
-                if new_house_number != 'exit':
-                    house.house_number = new_house_number
+                if info_to_change == '1':  # House number
+                    new_info = input(
+                        "Enter new house number (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        house.house_number = new_info
 
-            elif info_to_change == '2':  # Address
-                new_house_address = input(
-                    "Enter new house address (or [exit] to exit): ")
+                elif info_to_change == '2':  # Address
+                    new_info = input(
+                        "Enter new house address (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        house.address = new_info
 
-                if new_house_address != 'exit':
-                    house.address = new_house_address
-
-            elif info_to_change == '3':  # Floors
-                try:
-                    new_house_floors = int(input(
+                elif info_to_change == '3':  # Floors
+                    new_info = int(input(
                         "Enter new house floors number (or [0] to exit): "))
+                    if new_info > 0:
+                        house.floors = new_info
 
-                    if new_house_floors > 0:
-                        house.floors = new_house_floors
+                elif info_to_change == '4':  # Communication access
+                    new_info = input(
+                        "Enter new house number (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        house.communication_access = new_info
 
-                except TypeError:
-                    print("Wrong type! You must enter a number!")
-                except Exception as err:
-                    print("ERROR: ", err)
+                elif info_to_change == '5':  # Departmental affiliation
+                    new_info = input(
+                        "Enter new house number (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        house.departmental_affiliation = new_info
 
-            elif info_to_change == '4':  # Communication access
-                new_house_com_ac = input(
-                    "Enter new house number (or [exit] to exit): ")
-                new_house_com_ac = new_house_com_ac.lower()
+                elif info_to_change == '0':
+                    print()
 
-                if new_house_com_ac != 'exit':
-                    house.communication_access = new_house_com_ac
+                else:
+                    print("That option is not on the menu!")
 
-            elif info_to_change == '5':  # Departmental affiliation
-                new_house_dep_aff = input(
-                    "Enter new house number (or [exit] to exit): ")
-                new_house_dep_aff = new_house_dep_aff.lower()
-
-                if new_house_dep_aff != 'exit':
-                    house.departmental_affiliation = new_house_dep_aff
-            else:
-                print("That option is not on the menu!")
+    except TypeError:
+        print("Wrong type! You must enter a number!")
+    except Exception as err:
+        print("ERROR: ", err)
 
     return houses_list
 
@@ -192,6 +190,8 @@ def change_house_to_work_with(houses_list):
         if house.ID == house_to_work:
             print("House was found!")
             return house
+
+    print("House is not found!")
 
 
 def print_by_departmental_affiliation(houses_list):

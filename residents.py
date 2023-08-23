@@ -168,67 +168,57 @@ def change_resident_info(my_house):
     choice = input("Enter resident's ID: ")
     choice = uuid.UUID(choice)
 
-    for resident in rsdns_list:
-        if resident.ID == choice:
-            action = input(
-                "What do you want to change?\n[1] - Name\n[2] - Surname\n[3] - Age\n[4] - Phone number\n[5] - Email\n[6] - Flat number\n")
-            if action == '1':  # Name
-                new_name = input(
-                    "Enter new resident's name (or [exit] to exit): ")
+    try:
+        for resident in rsdns_list:
+            if resident.ID == choice:
+                info_to_change = input(
+                    "What do you want to change?\n[1] - Name\n[2] - Surname\n[3] - Age\n[4] - Phone number\n[5] - Email\n[6] - Flat number\n")
 
-                if new_name != 'exit':
-                    resident.name = new_name
+                if info_to_change == '1':  # Name
+                    new_info = input(
+                        "Enter new resident's name (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        resident.name = new_info
 
-            elif action == '2':  # Surname
-                new_surname = input(
-                    "Enter new resident's surname (or [exit] to exit): ")
+                elif info_to_change == '2':  # Surname
+                    new_info = input(
+                        "Enter new resident's surname (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        resident.surname = new_info
 
-                if new_surname != 'exit':
-                    resident.surname = new_surname
-
-            elif action == '3':  # Age
-                try:
-                    new_age = int(input(
+                elif info_to_change == '3':  # Age
+                    new_info = int(input(
                         "Enter resident's new age (or [0] to exit): "))
+                    if new_info != 0:
+                        resident.age = new_info
 
-                    if new_age != 0:
-                        resident.age = new_age
-                except TypeError:
-                    print("It isn't number!")
-                except Exception as err:
-                    print("ERROR -----> ", err)
+                elif info_to_change == '4':  # Phone number
+                    new_info = input(
+                        "Enter resident's new phone number (or [exit] to exit): ")
+                    if new_info != 'exit':
+                        resident.phone_number = new_info
 
-            elif action == '4':  # Phone number
-                new_phone_number = input(
-                    "Enter resident's new phone number (or [exit] to exit): ")
-                new_phone_number = new_phone_number.lower()
+                elif info_to_change == '5':  # Email
+                    new_info = input(
+                        "Enter new resident's email (or [exit] to exit): ")
+                    if new_info != 'exit' or new_info != 'Exit':
+                        resident.email = new_info
 
-                if new_phone_number != 'exit':
-                    resident.phone_number = new_phone_number
-
-            elif action == '5':  # Email
-                new_email = input(
-                    "Enter new resident's email (or [exit] to exit): ")
-
-                if new_email != 'exit' or new_email != 'Exit':
-                    resident.email = new_email
-
-            elif action == '6':  # Flat number
-                try:
-                    new_flat_number = int(input(
+                elif info_to_change == '6':  # Flat number
+                    new_info = int(input(
                         "Enter new resident's name (or [0] to exit): "))
-
-                    if new_flat_number != 0:
+                    if new_info != 0:
                         for flat in my_house.flats:
-                            if flat.flat_number == new_flat_number:
-                                resident.flat_number = new_flat_number
+                            if flat.flat_number == new_info:
+                                resident.flat_number = new_info
 
-                except TypeError:
-                    print("It isn't number!")
-                except Exception as err:
-                    print("ERROR: ", err)
-            else:
-                print("That option is not on the menu!")
+                elif info_to_change == '0':
+                    print()
+
+    except TypeError:
+        print("It isn't number!")
+    except Exception as err:
+        print("ERROR: ", err)
     return my_house
 
 

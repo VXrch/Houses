@@ -136,80 +136,57 @@ def change_apartment_info(my_house):
     flat_to_change_info = uuid.UUID(flat_to_change_info)
 
     info_to_change = input(
-        "What do you want to change?\n[1] - Flat number\n[2] - Floor\n[3] - Rooms\n[4] - Area\n")
+        "What do you want to change?\n[1] - Flat number\n[2] - Floor\n[3] - Rooms\n[4] - Area\n[0] - Go back")
 
-    for flat in my_house.flats:
-
-        try:
+    try:
+        for flat in my_house.flats:
             if flat.ID == flat_to_change_info:
+
                 if info_to_change == '1':  # Flat number
-                    try:
-
-                        new_flat_number = int(
-                            input("Enter new flat number (or [0] to exit): "))
-
-                        found_the_same = None
-
-                        for flat in my_house.flats:
-                            if flat.flat_number == new_flat_number:
-                                print("This flat is already listed!")
-                                found_the_same = True
-
-                        if found_the_same is None:
-                            flat.flat_number = new_flat_number
-                    except TypeError:
-                        print("Flat number must be a number!")
-                    except Exception as err:
-                        print("ERROR ----->  ", err)
+                    new_info = int(
+                        input("Enter new flat number (or [0] to exit): "))
+                    found_the_same = None
+                    for flat in my_house.flats:
+                        if flat.flat_number == new_info:
+                            print("This flat is already listed!")
+                            found_the_same = True
+                    if found_the_same is None:
+                        flat.flat_number = new_info
 
                 elif info_to_change == '2':  # Floor
-                    try:
-                        new_flat_floor = int(
-                            input("Enter new flat number (or [0] to exit): "))
-
-                        if new_flat_floor == 0:
-                            print()
-                        elif new_flat_floor > my_house.floors:
-                            print(
-                                f"Wrong floor! There are only {my_house.floors} floors in this building!")
-                        else:
-                            flat.floor = new_flat_floor
-                    except TypeError:
-                        print("Flat number must be a number!")
-                    except Exception as err:
-                        print("ERROR ----->  ", err)
+                    new_info = int(
+                        input("Enter new flat number (or [0] to exit): "))
+                    if new_info == 0:
+                        print()
+                    elif new_info > my_house.floors:
+                        print(
+                            f"Wrong floor! There are only {my_house.floors} floors in this building!")
+                    else:
+                        flat.floor = new_info
 
                 elif info_to_change == '3':  # Rooms
-                    try:
-                        new_flat_rooms = int(
-                            input("Enter new flat number (or [0] to exit): "))
-
-                        if new_flat_rooms != 0:
-                            flat.rooms = new_flat_rooms
-                    except TypeError:
-                        print("Flat number must be a number!")
-                    except Exception as err:
-                        print("ERROR ----->  ", err)
+                    new_info = int(
+                        input("Enter new flat number (or [0] to exit): "))
+                    if new_info != 0:
+                        flat.rooms = new_info
 
                 elif info_to_change == '4':  # Area
-                    try:
-                        new_flat_area = float(
-                            input("Enter new flat number (or [0] to exit): "))
+                    new_info = float(
+                        input("Enter new flat number (or [0] to exit): "))
 
-                        if new_flat_area != 0:
-                            flat.area = new_flat_area
-                    except TypeError:
-                        print("Flat number must be a number!")
-                    except Exception as err:
-                        print("ERROR ----->  ", err)
+                    if new_info != 0:
+                        flat.area = new_info
+
+                elif info_to_change == '0':
+                    print()
 
                 else:
                     print("That option is not on the menu!")
 
-        except TypeError:
-            print("It isn't number!")
-        except Exception as err:
-            print("ERROR: ", err)
+    except TypeError:
+        print("It isn't number!")
+    except Exception as err:
+        print("ERROR: ", err)
 
     return my_house
 
