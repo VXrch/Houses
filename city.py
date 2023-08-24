@@ -330,7 +330,6 @@ def print_by_population_density(citys_list):
 
 
 def full_citys_list(citys_list):
-    print("__________________________________________________________________________________________\n")
     for city in citys_list:
         city.print_short_info()
 

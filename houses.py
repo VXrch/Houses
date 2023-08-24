@@ -225,7 +225,6 @@ def print_by_communication_access(houses_list):
 
 
 def full_houses_list(houses_list):
-    print("__________________________________________________________________________________________\n")
     for house in houses_list:
         house.print_short_info()
 

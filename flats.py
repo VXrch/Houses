@@ -192,7 +192,6 @@ def change_apartment_info(my_house):
 
 
 def full_list_of_apartments(flats_list):
-    print("__________________________________________________________________________________________\n")
     for flat in flats_list:
         flat.print_short_info()
 
@@ -201,7 +200,6 @@ def display_specific_apartment(flats_list):
 
     full_list_of_apartments(flats_list)
 
-    print("__________________________________________________________________________________________\n")
     apartment_to_search = input("Enter apartment ID: ")
     apartment_to_search = uuid.UUID(apartment_to_search)
 

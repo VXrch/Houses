@@ -6,7 +6,7 @@ from residents import resident_menu
 from city import city_menu, choose_city_to_work_with
 
 
-def main_menu(houses_list, my_house):
+def main_menu(my_city, my_house, citys_list, houses_list):
 
     ext = False
 
@@ -29,7 +29,7 @@ def main_menu(houses_list, my_house):
             my_city, citys_list = city_menu(my_city, citys_list)
 
         elif action == '2':  # house menu
-            my_house, houses_list = house_menu(my_house, houses_list)
+            my_house, houses_list = house_menu(my_house, houses_list, my_city)
 
         elif action == '3':  # flat menu
             my_house, houses_list = flat_menu(my_house, houses_list)
@@ -38,10 +38,10 @@ def main_menu(houses_list, my_house):
             my_house, houses_list = resident_menu(my_house, houses_list)
 
         elif action == '5':  # Save information to a file
-            write_data_to_file(houses_list)
+            write_data_to_file(citys_list)
 
         elif action == '6':  # Uploading information from a file
-            read_data_from_file()
+            citys_list = read_data_from_file()
 
         elif action == '0':  # Exit
 
@@ -74,7 +74,6 @@ houses_list = []
 
 
 citys_list = read_data_from_file()
-houses_list = my_city.houses
 
 if len(citys_list) != 0:
     my_city = choose_city_to_work_with(citys_list)
@@ -84,6 +83,8 @@ else:
     new_city = temp_city.register_new_city(citys_list)
     citys_list.append(new_city)
     my_city = choose_city_to_work_with(citys_list)
+
+houses_list = my_city.houses
 
 
 if len(houses_list) != 0:
@@ -97,4 +98,4 @@ else:
 
 #####################################################################################################################
 
-main_menu(houses_list, my_house)
+main_menu(my_city, my_house, citys_list, houses_list)
