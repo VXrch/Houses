@@ -85,6 +85,11 @@ def resident_menu(my_house, houses_list):
             residents_list = residents_in_all_houses(houses_list)
             display_specific_resident(residents_list)
 
+        else:
+            print("That option is not on the menu!")
+
+        input("Press any key to continue: ")
+
     return my_house, houses_list
 
 

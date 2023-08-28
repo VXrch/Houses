@@ -20,7 +20,7 @@ def house_menu(my_house, houses_list, my_city):
         print("[6] - Display information about a specific house")
         print("[7] - Display information about houses by communication access")
         print("[8] - Display information about houses by departmental affiliation")
-        print("[8] - Display house to work")
+        print("[9] - Display house to work")
         print("[0] - Go back")
         print("__________________________________________________________________________________________\n")
         action = input("/(o_o)\\  ")
@@ -59,6 +59,8 @@ def house_menu(my_house, houses_list, my_city):
 
         else:
             print("That option is not on the menu!")
+
+        input("Press any key to continue: ")
 
     return my_house, houses_list
 
@@ -168,10 +170,8 @@ def choose_house_to_work_with(houses_list):
     while not ext:
 
         full_houses_list(houses_list)
-        print("")
-        print("|-_-_-_-_-_-_-_---|> Welcome <|---_-_-_-_-_-_-_-|")
-        print("")
 
+        print("\n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n")
         house_to_work = input("Enter house id to work with: ")
         house_to_work = uuid.UUID(house_to_work)
 
@@ -180,7 +180,6 @@ def choose_house_to_work_with(houses_list):
                 return house
 
         print("Wrong ID! Try again!")
-        input("")
 
 
 def change_house_to_work_with(houses_list):
@@ -255,18 +254,19 @@ def choose_house_or_create_a_new_one(houses_list):
         full_houses_list(houses_list)
 
         print(
-            "Do you want to continue working with what we already have or create a new one?")
-        move_on = input("[1] - Continue\n[2] - Create a new one")
+            "\nDo you want to continue working with what we already have or create a new one?")
+        move_on = input("[1] - Continue\n[2] - Create a new one\n : ")
 
         if move_on == '1':
             my_house = choose_house_to_work_with(houses_list)
+            ext = True
 
         elif move_on == '2':
             new_house = temp_house.register_new_house(houses_list)
             houses_list.append(new_house)
 
             move_on = input(
-                "The house is registered! Start working with this one?\n [Y][N]")
+                "The house is registered! Start working with this one?\n [Y][N]\n : ")
             move_on = move_on.lower()
 
             if move_on == 'y':

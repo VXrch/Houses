@@ -71,22 +71,26 @@ ext = False
 #####################################################################################################################
 
 
+print("")
+print("|-_-_-_-_-_-_-_---|> Welcome <|---_-_-_-_-_-_-_-|")
+print("")
+
 citys_list = read_data_from_file()
-if len(citys_list) == 1:
+if len(citys_list) > 0:
     my_city, citys_list = choose_city_or_create_a_new_one(citys_list)
 else:
     print(
-        "You don't have finished citys yet! To start working with the program, register a new city!")
+        "\nYou don't have finished citys yet! To start working with the program, register a new city!")
     new_city = temp_city.register_new_city(citys_list)
     citys_list.append(new_city)
     my_city, citys_list = choose_city_or_create_a_new_one(citys_list)
 
 
-if len(my_city.houses) != 0:
+if len(my_city.houses) > 0:
     choose_house_or_create_a_new_one(my_city.houses)
 else:
     print(
-        "You don't have finished homes yet! To start working with the program, register a new house!")
+        "\nYou don't have finished homes yet! To start working with the program, register a new house!")
     new_house = temp_house.register_new_house(my_city.houses, my_city)
     my_city.attach_house(new_house)
     my_house, my_city.houses = choose_house_or_create_a_new_one(my_city.houses)
@@ -94,4 +98,4 @@ else:
 
 #####################################################################################################################
 
-main_menu(my_city, my_house, citys_list, my_city.houses)
+main_menu(my_city, my_house, citys_list)

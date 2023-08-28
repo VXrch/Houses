@@ -82,6 +82,8 @@ def city_menu(my_city, citys_list):
         else:
             print("That option is not on the menu!")
 
+        input("Press any key to continue: ")
+
     return my_city, citys_list
 
 
@@ -203,10 +205,8 @@ def choose_city_to_work_with(citys_list):
     while not ext:
 
         full_citys_list(citys_list)
-        print("")
-        print("|-_-_-_-_-_-_-_---|> Welcome <|---_-_-_-_-_-_-_-|")
-        print("")
 
+        print("\n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n")
         city_to_work = input("Enter city id to work with: ")
         city_to_work = uuid.UUID(city_to_work)
 
@@ -360,18 +360,19 @@ def choose_city_or_create_a_new_one(citys_list):
         full_citys_list(citys_list)
 
         print(
-            "Do you want to continue working with what we already have or create a new one?")
-        move_on = input("[1] - Continue\n[2] - Create a new one")
+            "\nDo you want to continue working with what we already have or create a new one?")
+        move_on = input("[1] - Continue\n[2] - Create a new one\n : ")
 
         if move_on == '1':
             my_city = choose_city_to_work_with(citys_list)
+            ext = True
 
         elif move_on == '2':
             new_city = temp_city.register_new_city(citys_list)
             citys_list.append(new_city)
 
             move_on = input(
-                "The city is registered! Start working with this city?\n [Y][N]")
+                "The city is registered! Start working with this city?\n [Y][N]\n : ")
             move_on = move_on.lower()
 
             if move_on == 'y':

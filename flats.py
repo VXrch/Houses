@@ -94,6 +94,8 @@ def flat_menu(my_house, houses_list):
         else:
             print("That option is not on the menu!")
 
+        input("Press any key to continue: ")
+
     return my_house, houses_list
 
 
