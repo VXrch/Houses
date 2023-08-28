@@ -4,79 +4,83 @@ import uuid
 
 def city_menu(my_city, citys_list):
 
-    print("\n__________________________________________________________________________________________\n")
-    print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
-    print()
-    print("[1] - Add a city")
-    print("[2] - Delete city")
-    print("[3] - Change city info")
-    print("[4] - Change city to work")
-    print()
-    print("[5] - Display full list of citys")
-    print("[6] - Display information about a specific city")
-    print("[7] - Display city to work")
-    print()
-    print("Display information about citys by: ")
-    print("[8] - Country")
-    print("[9] - Region")
-    print("[10] - Year of foundation")
-    print("[11] - population")
-    print("[12] - Area")
-    print("[13] - Area in range")
-    print("[14] - Population density")
-    print()
-    print("[0] - Go back")
-    print("__________________________________________________________________________________________\n")
-    action = input("/(o_o)\\  ")
+    ex = False
 
-    if action == '0':
+    while not ex:
+
+        print("\n__________________________________________________________________________________________\n")
+        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
         print()
+        print("[1] - Add a city")
+        print("[2] - Delete city")
+        print("[3] - Change city info")
+        print("[4] - Change city to work")
+        print()
+        print("[5] - Display full list of citys")
+        print("[6] - Display information about a specific city")
+        print("[7] - Display city to work")
+        print()
+        print("Display information about citys by: ")
+        print("[8] - Country")
+        print("[9] - Region")
+        print("[10] - Year of foundation")
+        print("[11] - population")
+        print("[12] - Area")
+        print("[13] - Area in range")
+        print("[14] - Population density")
+        print()
+        print("[0] - Go back")
+        print("__________________________________________________________________________________________\n")
+        action = input("/(o_o)\\  ")
 
-    elif action == '1':  # Add a city
-        citys_list = add_new_city(citys_list)
+        if action == '0':
+            ex = True
 
-    elif action == '2':  # Delete city
-        citys_list = delete_city(citys_list, my_city)
+        elif action == '1':  # Add a city
+            citys_list = add_new_city(citys_list)
 
-    elif action == '3':  # Change city info
-        citys_list = change_city_info(citys_list)
+        elif action == '2':  # Delete city
+            citys_list = delete_city(citys_list, my_city)
 
-    elif action == '4':  # Change the city to work
-        my_new_city = change_city_to_work_with(citys_list)
-        my_city = my_new_city
+        elif action == '3':  # Change city info
+            citys_list = change_city_info(citys_list)
 
-    elif action == '5':  # Display full list of citys
-        full_citys_list(citys_list)
+        elif action == '4':  # Change the city to work
+            my_new_city = change_city_to_work_with(citys_list)
+            my_city = my_new_city
 
-    elif action == '6':  # Display information about a specific city
-        display_info_about_specific_city(citys_list)
+        elif action == '5':  # Display full list of citys
+            full_citys_list(citys_list)
 
-    elif action == '7':  # Display my city
-        my_city.print_info()
+        elif action == '6':  # Display information about a specific city
+            display_info_about_specific_city(citys_list)
 
-    elif action == '8':  # Display information about citys by country
-        print_by_country(citys_list)
+        elif action == '7':  # Display my city
+            my_city.print_info()
 
-    elif action == '9':  # Display information about citys by region
-        print_by_region(citys_list)
+        elif action == '8':  # Display information about citys by country
+            print_by_country(citys_list)
 
-    elif action == '10':  # Display information about citys by year of foundation
-        print_by_year_of_foundation(citys_list)
+        elif action == '9':  # Display information about citys by region
+            print_by_region(citys_list)
 
-    elif action == '11':  # Display information about citys by population
-        print_by_population(citys_list)
+        elif action == '10':  # Display information about citys by year of foundation
+            print_by_year_of_foundation(citys_list)
 
-    elif action == '12':  # Display information about citys by area
-        print_by_area(citys_list)
+        elif action == '11':  # Display information about citys by population
+            print_by_population(citys_list)
 
-    elif action == '13':  # Display information about citys by area in range
-        print_by_area_in_range(citys_list)
+        elif action == '12':  # Display information about citys by area
+            print_by_area(citys_list)
 
-    elif action == '14':  # Display information about citys by population density
-        print_by_population_density(citys_list)
+        elif action == '13':  # Display information about citys by area in range
+            print_by_area_in_range(citys_list)
 
-    else:
-        print("That option is not on the menu!")
+        elif action == '14':  # Display information about citys by population density
+            print_by_population_density(citys_list)
+
+        else:
+            print("That option is not on the menu!")
 
     return my_city, citys_list
 
@@ -344,3 +348,38 @@ def display_info_about_specific_city(citys_list):
     for city in citys_list:
         if city.ID == city_to_display:
             city.print_info()
+
+
+def choose_city_or_create_a_new_one(citys_list):
+
+    ext = False
+    temp_city = City(0, 0, 0, 0, 0, 0, 0, 0)
+
+    while ext == False:
+
+        full_citys_list(citys_list)
+
+        print(
+            "Do you want to continue working with what we already have or create a new one?")
+        move_on = input("[1] - Continue\n[2] - Create a new one")
+
+        if move_on == '1':
+            my_city = choose_city_to_work_with(citys_list)
+
+        elif move_on == '2':
+            new_city = temp_city.register_new_city(citys_list)
+            citys_list.append(new_city)
+
+            move_on = input(
+                "The city is registered! Start working with this city?\n [Y][N]")
+            move_on = move_on.lower()
+
+            if move_on == 'y':
+                my_city = new_city
+                ext = True
+            else:
+                print("Ok! Then let's create a new city!")
+        else:
+            print("Wrong choice!")
+
+    return my_city, citys_list

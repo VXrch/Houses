@@ -4,82 +4,86 @@ import uuid
 
 def resident_menu(my_house, houses_list):
 
-    print("\n__________________________________________________________________________________________\n")
-    print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
-    print()
-    print("[1] - Add new resident")
-    print("[2] - Remove a resident")
-    print("[3] - Change resident info")
-    print()
-    print("Display only in this house: ")
-    print("[4] - Display all residents")
-    print("[5] - Display residents in one floor")
-    print("[6] - Displat residents by age")
-    print("[7] - Displat residents by age in range")
-    print("[8] - Displat a specific resident")
-    print()
-    print("Display in all houses: ")
-    print("[9] - Display all residents")
-    print("[10] - Display residents in one floor")
-    print("[11] - Displat residents by age")
-    print("[12] - Displat residents by age in range")
-    print("[13] - Displat a specific resident")
-    print("[0] - Go back")
+    ex = False
 
-    print("__________________________________________________________________________________________\n")
-    action = input("/(o_o)\\  ")
+    while not ex:
 
-    if action == '0':
+        print("\n__________________________________________________________________________________________\n")
+        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
         print()
+        print("[1] - Add new resident")
+        print("[2] - Remove a resident")
+        print("[3] - Change resident info")
+        print()
+        print("Display only in this house: ")
+        print("[4] - Display all residents")
+        print("[5] - Display residents in one floor")
+        print("[6] - Displat residents by age")
+        print("[7] - Displat residents by age in range")
+        print("[8] - Displat a specific resident")
+        print()
+        print("Display in all houses: ")
+        print("[9] - Display all residents")
+        print("[10] - Display residents in one floor")
+        print("[11] - Displat residents by age")
+        print("[12] - Displat residents by age in range")
+        print("[13] - Displat a specific resident")
+        print()
+        print("[0] - Go back")
+        print("__________________________________________________________________________________________\n")
+        action = input("/(o_o)\\  ")
 
-    elif action == '1':  # Add new resident
-        my_house = add_new_resident(my_house)
+        if action == '0':
+            ex = True
 
-    elif action == '2':  # Remove a resident
-        my_house = delete_resident(my_house)
+        elif action == '1':  # Add new resident
+            my_house = add_new_resident(my_house)
 
-    elif action == '3':  # Change resident info
-        my_house = change_resident_info(my_house)
+        elif action == '2':  # Remove a resident
+            my_house = delete_resident(my_house)
 
-    elif action == '4':  # Display all residents
-        residents_list = residents_in_one_house(my_house)
-        display_full_residents_list(residents_list)
+        elif action == '3':  # Change resident info
+            my_house = change_resident_info(my_house)
 
-    elif action == '5':  # Display residents in one floor
-        residents_list = residents_in_one_house(my_house)
-        display_residents_by_floor(residents_list)
+        elif action == '4':  # Display all residents
+            residents_list = residents_in_one_house(my_house)
+            display_full_residents_list(residents_list)
 
-    elif action == '6':  # Displat residents by age
-        residents_list = residents_in_one_house(my_house)
-        display_residents_by_age(residents_list)
+        elif action == '5':  # Display residents in one floor
+            residents_list = residents_in_one_house(my_house)
+            display_residents_by_floor(residents_list)
 
-    elif action == '7':  # Displat residents by age in range
-        residents_list = residents_in_one_house(my_house)
-        display_residents_by_age_range(residents_list)
+        elif action == '6':  # Displat residents by age
+            residents_list = residents_in_one_house(my_house)
+            display_residents_by_age(residents_list)
 
-    elif action == '8':  # Displat a specific resident
-        residents_list = residents_in_one_house(my_house)
-        display_specific_resident(residents_list)
+        elif action == '7':  # Displat residents by age in range
+            residents_list = residents_in_one_house(my_house)
+            display_residents_by_age_range(residents_list)
 
-    elif action == '9':  # (ALL HOUSES) Display all residents
-        residents_list = residents_in_all_houses(houses_list)
-        display_full_residents_list(residents_list)
+        elif action == '8':  # Displat a specific resident
+            residents_list = residents_in_one_house(my_house)
+            display_specific_resident(residents_list)
 
-    elif action == '10':  # (ALL HOUSES) Display residents in one floor
-        residents_list = residents_in_all_houses(houses_list)
-        display_residents_by_floor(residents_list)
+        elif action == '9':  # (ALL HOUSES) Display all residents
+            residents_list = residents_in_all_houses(houses_list)
+            display_full_residents_list(residents_list)
 
-    elif action == '11':  # (ALL HOUSES) Displat residents by age
-        residents_list = residents_in_all_houses(houses_list)
-        display_residents_by_age(residents_list)
+        elif action == '10':  # (ALL HOUSES) Display residents in one floor
+            residents_list = residents_in_all_houses(houses_list)
+            display_residents_by_floor(residents_list)
 
-    elif action == '12':  # (ALL HOUSES) Displat residents by age in range
-        residents_list = residents_in_all_houses(houses_list)
-        display_residents_by_age_range(residents_list)
+        elif action == '11':  # (ALL HOUSES) Displat residents by age
+            residents_list = residents_in_all_houses(houses_list)
+            display_residents_by_age(residents_list)
 
-    elif action == '13':  # (ALL HOUSES) Displat a specific resident
-        residents_list = residents_in_all_houses(houses_list)
-        display_specific_resident(residents_list)
+        elif action == '12':  # (ALL HOUSES) Displat residents by age in range
+            residents_list = residents_in_all_houses(houses_list)
+            display_residents_by_age_range(residents_list)
+
+        elif action == '13':  # (ALL HOUSES) Displat a specific resident
+            residents_list = residents_in_all_houses(houses_list)
+            display_specific_resident(residents_list)
 
     return my_house, houses_list
 

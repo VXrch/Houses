@@ -4,90 +4,95 @@ import uuid
 
 def flat_menu(my_house, houses_list):
 
-    print("\n__________________________________________________________________________________________\n")
-    print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
-    print()
+    ex = False
 
-    print("[1] - Add an apartment")
-    print("[2] - Delete an apartment")
-    print("[3] - Change apartment info")
-    print()
-    print("Display only in this house: ")
-    print("[4] - Display the full list of apartments")
-    print("[5] - Display information about a specific apartment")
-    print("[6] - Display information about apartments on a particular floor")
-    print("[7] - Display information about apartments of the same type")
-    print("[8] - Display information about apartments by area")
-    print()
-    print("Display in all houses: ")
-    print("[9] - Display the full list of apartments")
-    print("[10] - Display information about a specific apartment")
-    print("[11] - Display information about apartments on a particular floor")
-    print("[12] - Display information about apartments of the same type")
-    print("[13] - Display information about apartments by area")
-    print("[0] - Go back")
-    print("__________________________________________________________________________________________\n")
-    action = input("/(o_o)\\  ")
+    while not ex:
 
-    if action == '0':
+        print("\n__________________________________________________________________________________________\n")
+        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
         print()
 
-    elif action == '1':  # Add an apartment
-        my_house = add_an_apartment(my_house)
+        print("[1] - Add an apartment")
+        print("[2] - Delete an apartment")
+        print("[3] - Change apartment info")
+        print()
+        print("Display only in this house: ")
+        print("[4] - Display the full list of apartments")
+        print("[5] - Display information about a specific apartment")
+        print("[6] - Display information about apartments on a particular floor")
+        print("[7] - Display information about apartments of the same type")
+        print("[8] - Display information about apartments by area")
+        print()
+        print("Display in all houses: ")
+        print("[9] - Display the full list of apartments")
+        print("[10] - Display information about a specific apartment")
+        print("[11] - Display information about apartments on a particular floor")
+        print("[12] - Display information about apartments of the same type")
+        print("[13] - Display information about apartments by area")
+        print()
+        print("[0] - Go back")
+        print("__________________________________________________________________________________________\n")
+        action = input("/(o_o)\\  ")
 
-    elif action == '2':  # Delete an apartment
-        my_house = delete_an_apartment(my_house)
+        if action == '0':
+            ex = True
 
-    elif action == '3':  # Change apartment info
-        my_house = change_apartment_info(my_house)
+        elif action == '1':  # Add an apartment
+            my_house = add_an_apartment(my_house)
 
-    elif action == '4':  # Display the full list of apartments
-        flats_list = flats_in_this_house(my_house)
-        full_list_of_apartments(flats_list)
+        elif action == '2':  # Delete an apartment
+            my_house = delete_an_apartment(my_house)
 
-    elif action == '5':  # Display information about a specific apartment
-        flats_list = flats_in_this_house(my_house)
-        display_specific_apartment(flats_list)
+        elif action == '3':  # Change apartment info
+            my_house = change_apartment_info(my_house)
 
-    elif action == '6':  # Display information about apartments on a particular floor
-        flats_list = flats_in_this_house(my_house)
-        print_by_floor(flats_list)
+        elif action == '4':  # Display the full list of apartments
+            flats_list = flats_in_this_house(my_house)
+            full_list_of_apartments(flats_list)
 
-    elif action == '7':  # Display information about apartments of the same type
-        flats_list = flats_in_this_house(my_house)
-        print_the_same_type(flats_list)
+        elif action == '5':  # Display information about a specific apartment
+            flats_list = flats_in_this_house(my_house)
+            display_specific_apartment(flats_list)
 
-    elif action == '8':  # Display information about apartments by area
-        flats_list = flats_in_this_house(my_house)
-        print_by_area(flats_list)
+        elif action == '6':  # Display information about apartments on a particular floor
+            flats_list = flats_in_this_house(my_house)
+            print_by_floor(flats_list)
 
-        # (ALL HOUSES) Display the full list of apartments (ALL HOUSES)
-    elif action == '9':
-        flats_list = flats_in_all_houses(houses_list)
-        full_list_of_apartments(houses_list)
+        elif action == '7':  # Display information about apartments of the same type
+            flats_list = flats_in_this_house(my_house)
+            print_the_same_type(flats_list)
 
-        # (ALL HOUSES) Display information about a specific apartment
-    elif action == '10':
-        flats_list = flats_in_all_houses(houses_list)
-        display_specific_apartment(flats_list)
+        elif action == '8':  # Display information about apartments by area
+            flats_list = flats_in_this_house(my_house)
+            print_by_area(flats_list)
 
-        # (ALL HOUSES) Display information about apartments on a particular floor
-    elif action == '11':
-        flats_list = flats_in_all_houses(houses_list)
-        print_by_floor(flats_list)
+            # (ALL HOUSES) Display the full list of apartments (ALL HOUSES)
+        elif action == '9':
+            flats_list = flats_in_all_houses(houses_list)
+            full_list_of_apartments(houses_list)
 
-        # (ALL HOUSES) Display information about apartments of the same type
-    elif action == '12':
-        flats_list = flats_in_all_houses(houses_list)
-        print_the_same_type(flats_list)
+            # (ALL HOUSES) Display information about a specific apartment
+        elif action == '10':
+            flats_list = flats_in_all_houses(houses_list)
+            display_specific_apartment(flats_list)
 
-        # (ALL HOUSES) Display information about apartments by area
-    elif action == '13':
-        flats_list = flats_in_all_houses(houses_list)
-        print_by_area(flats_list)
+            # (ALL HOUSES) Display information about apartments on a particular floor
+        elif action == '11':
+            flats_list = flats_in_all_houses(houses_list)
+            print_by_floor(flats_list)
 
-    else:
-        print("That option is not on the menu!")
+            # (ALL HOUSES) Display information about apartments of the same type
+        elif action == '12':
+            flats_list = flats_in_all_houses(houses_list)
+            print_the_same_type(flats_list)
+
+            # (ALL HOUSES) Display information about apartments by area
+        elif action == '13':
+            flats_list = flats_in_all_houses(houses_list)
+            print_by_area(flats_list)
+
+        else:
+            print("That option is not on the menu!")
 
     return my_house, houses_list
 

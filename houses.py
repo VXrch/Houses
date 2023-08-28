@@ -4,57 +4,61 @@ import uuid
 
 def house_menu(my_house, houses_list, my_city):
 
-    print("\n__________________________________________________________________________________________\n")
-    print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
-    print()
-    print("[1] - Add a house")
-    print("[2] - Delete house")
-    print("[3] - Change house info")
-    print("[4] - Change the house to work")
-    print()
-    print("[5] - Display full list of houses")
-    print("[6] - Display information about a specific house")
-    print("[7] - Display information about houses by communication access")
-    print("[8] - Display information about houses by departmental affiliation")
-    print("[8] - Display house to work")
-    print("[0] - Go back")
-    print("__________________________________________________________________________________________\n")
-    action = input("/(o_o)\\  ")
+    ex = False
 
-    if action == '0':
+    while not ex:
+
+        print("\n__________________________________________________________________________________________\n")
+        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
         print()
+        print("[1] - Add a house")
+        print("[2] - Delete house")
+        print("[3] - Change house info")
+        print("[4] - Change the house to work")
+        print()
+        print("[5] - Display full list of houses")
+        print("[6] - Display information about a specific house")
+        print("[7] - Display information about houses by communication access")
+        print("[8] - Display information about houses by departmental affiliation")
+        print("[8] - Display house to work")
+        print("[0] - Go back")
+        print("__________________________________________________________________________________________\n")
+        action = input("/(o_o)\\  ")
 
-    elif action == '1':  # Add a house
-        houses_list = add_new_house(houses_list, my_city)
+        if action == '0':
+            ex = True
 
-    elif action == '2':  # Delete house
-        houses_list = delete_house(houses_list, my_house)
+        elif action == '1':  # Add a house
+            houses_list = add_new_house(houses_list, my_city)
 
-    elif action == '3':  # Change house info
-        houses_list = change_house_info(houses_list)
+        elif action == '2':  # Delete house
+            houses_list = delete_house(houses_list, my_house)
 
-    elif action == '4':  # Change the house to work
-        my_new_house = change_house_to_work_with(houses_list)
-        my_house = my_new_house
-        my_house.print_info()
+        elif action == '3':  # Change house info
+            houses_list = change_house_info(houses_list)
 
-    elif action == '5':  # Display full list of houses
-        full_houses_list(houses_list)
+        elif action == '4':  # Change the house to work
+            my_new_house = change_house_to_work_with(houses_list)
+            my_house = my_new_house
+            my_house.print_info()
 
-    elif action == '6':  # Display information about a specific house
-        display_info_about_specific_house(houses_list)
+        elif action == '5':  # Display full list of houses
+            full_houses_list(houses_list)
 
-    elif action == '7':  # Display information about houses by communication access
-        print_by_communication_access(houses_list)
+        elif action == '6':  # Display information about a specific house
+            display_info_about_specific_house(houses_list)
 
-    elif action == '8':  # Display information about houses by departmental affiliation
-        print_by_departmental_affiliation(houses_list)
+        elif action == '7':  # Display information about houses by communication access
+            print_by_communication_access(houses_list)
 
-    elif action == '9':  # Display my house
-        my_house.print_info()
+        elif action == '8':  # Display information about houses by departmental affiliation
+            print_by_departmental_affiliation(houses_list)
 
-    else:
-        print("That option is not on the menu!")
+        elif action == '9':  # Display my house
+            my_house.print_info()
+
+        else:
+            print("That option is not on the menu!")
 
     return my_house, houses_list
 
@@ -239,3 +243,38 @@ def display_info_about_specific_house(houses_list):
     for house in houses_list:
         if house.ID == house_to_display:
             house.print_info()
+
+
+def choose_house_or_create_a_new_one(houses_list):
+
+    ext = False
+    temp_house = House(0, 0, 0, 0, 0, 0, 0, 0)
+
+    while ext == False:
+
+        full_houses_list(houses_list)
+
+        print(
+            "Do you want to continue working with what we already have or create a new one?")
+        move_on = input("[1] - Continue\n[2] - Create a new one")
+
+        if move_on == '1':
+            my_house = choose_house_to_work_with(houses_list)
+
+        elif move_on == '2':
+            new_house = temp_house.register_new_house(houses_list)
+            houses_list.append(new_house)
+
+            move_on = input(
+                "The house is registered! Start working with this one?\n [Y][N]")
+            move_on = move_on.lower()
+
+            if move_on == 'y':
+                my_house = new_house
+                ext = True
+            else:
+                print("Ok! Then let's create a new one!")
+        else:
+            print("Wrong choice!")
+
+    return my_house, houses_list

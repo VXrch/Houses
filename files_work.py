@@ -3,12 +3,67 @@ import uuid
 import csv
 
 
+def files_menu(citys_list):
+
+    ex = False
+
+    while not ex:
+
+        print("\n__________________________________________________________________________________________\n")
+        print("(/'O_O)/'--->  What would you like to do?  <---'\\(O_O'\\)")
+        print()
+        print("[1] - Save information to a file")
+        print("[2] - Uploading information from a file")
+        print("[3] - Clear all data")
+        print()
+        print("[4] - Clear data from the citys file")
+        print("[5] - Clear data from the houses file")
+        print("[6] - Clear data from the flats file")
+        print("[7] - Clear data from the residents file")
+        print()
+        print("[0] - Go back")
+        print("\n__________________________________________________________________________________________\n")
+        action = input("/(o_o)\\  ")
+
+        if action == '0':  # Exit
+            ex = True
+
+        elif action == '1':  # Save information to a file
+            write_data_to_file(citys_list)
+
+        elif action == '2':  # Uploading information from a file
+            citys_list = read_data_from_file()
+
+        elif action == '3':  # Clear all data
+            clear_all_program_data()
+
+        elif action == '4':  # Clear data from the citys file
+            clear_data('citys')
+
+        elif action == '5':  # Clear data from the houses file
+            clear_data('houses')
+
+        elif action == '6':  # Clear data from the flats file
+            clear_data('flats')
+
+        elif action == '7':  # Clear data from the residents file
+            clear_data('residents')
+        else:
+            print("Wrong choice!")
+
+    return citys_list
+
+
 def write_data_to_file(citys_list):
     try:
+        file_1 = 'Data_of_program/citys.csv'
+        file_2 = 'Data_of_program/houses.csv'
+        file_3 = 'Data_of_program/flats.csv'
+        file_4 = 'Data_of_program/residents.csv'
+
         houses_list = []
         flats_list = []
         residents_list = []
-        data_folder = 'Data_of_program'
 
         for city in citys_list:
             for house in city.houses:
@@ -23,7 +78,7 @@ def write_data_to_file(citys_list):
                         resident.flat_ID = flat.ID
                         residents_list.append(resident)
 
-        with open(f'{data_folder}/citys.csv', 'w', newline='', encoding='utf-8') as citys_file:
+        with open(file_1, 'w', newline='', encoding='utf-8') as citys_file:
             csv_writer = csv.writer(citys_file)
             csv_writer.writerow(['ID', 'city_name', 'country', 'region',
                                 'year_of_foundation', 'population', 'area', 'population_density'])
@@ -32,7 +87,7 @@ def write_data_to_file(citys_list):
                 csv_writer.writerow(
                     [city.ID, city.city_name, city.country, city.region, city.year_of_foundation, city.population, city.area, city.population_density])
 
-        with open(f'{data_folder}/houses.csv', 'w', newline='', encoding='utf-8') as houses_file:
+        with open(file_2, 'w', newline='', encoding='utf-8') as houses_file:
             csv_writer = csv.writer(houses_file)
             csv_writer.writerow(['ID', 'house_number', 'address', 'floors',
                                 'communication_access', 'departmental_affiliation', 'city_ID', 'city'])
@@ -41,7 +96,7 @@ def write_data_to_file(citys_list):
                 csv_writer.writerow([house.ID, house.house_number, house.address, house.floors,
                                     house.communication_access, house.departmental_affiliation, house.city_ID, house.city])
 
-        with open(f'{data_folder}/flats.csv', 'w', newline='', encoding='utf-8') as flats_file:
+        with open(file_3, 'w', newline='', encoding='utf-8') as flats_file:
             csv_writer = csv.writer(flats_file)
             csv_writer.writerow(
                 ['ID', 'house', 'flat_number', 'floor', 'rooms', 'area', 'house_ID'])
@@ -50,7 +105,7 @@ def write_data_to_file(citys_list):
                 csv_writer.writerow(
                     [flat.ID, flat.house, flat.flat_number, flat.floor, flat.rooms, flat.area, flat.house_ID])
 
-        with open(f'{data_folder}/residents.csv', 'w', newline='', encoding='utf-8') as residents_file:
+        with open(file_4, 'w', newline='', encoding='utf-8') as residents_file:
             csv_writer = csv.writer(residents_file)
             csv_writer.writerow(['ID', 'name', 'surname', 'age', 'gender',
                                 'phone_number', 'email', 'flat_number', 'flat_ID'])
@@ -60,6 +115,7 @@ def write_data_to_file(citys_list):
                                     resident.phone_number, resident.email, resident.flat_number, resident.flat_ID])
 
         return True
+
     except Exception as err:
         print(f"ERROR WITH WRITING TO FILE: {err}")
         return False
@@ -68,13 +124,17 @@ def write_data_to_file(citys_list):
 def read_data_from_file():
 
     try:
-        data_folder = 'Data_of_program'
+        file_1 = 'Data_of_program/citys.csv'
+        file_2 = 'Data_of_program/houses.csv'
+        file_3 = 'Data_of_program/flats.csv'
+        file_4 = 'Data_of_program/residents.csv'
+
         list_of_citys = []
         list_houses = []
         list_flats = []
         list_residents = []
 
-        with open(f'{data_folder}/citys.csv', 'r', newline='', encoding='utf-8') as citys_file:
+        with open(file_1, 'r', newline='', encoding='utf-8') as citys_file:
             csv_reader = csv.reader(citys_file)
             next(csv_reader)
 
@@ -83,7 +143,7 @@ def read_data_from_file():
                             row[4], row[5], row[6], row[7])
                 list_of_citys.append(city)
 
-        with open(f'{data_folder}/houses.csv', 'r', newline='', encoding='utf-8') as houses_file:
+        with open(file_2, 'r', newline='', encoding='utf-8') as houses_file:
             csv_reader = csv.reader(houses_file)
             next(csv_reader)
 
@@ -92,7 +152,7 @@ def read_data_from_file():
                               row[3], row[4], row[5], row[6], row[7])
                 list_houses.append(house)
 
-        with open(f'{data_folder}/flats.csv', 'r', newline='', encoding='utf-8') as flats_file:
+        with open(file_3, 'r', newline='', encoding='utf-8') as flats_file:
             csv_reader = csv.reader(flats_file)
             next(csv_reader)
 
@@ -101,7 +161,7 @@ def read_data_from_file():
                             row[3], row[4], row[5], row[6])
                 list_flats.append(flat)
 
-        with open(f'{data_folder}/residents.csv', 'r', newline='', encoding='utf-8') as residents_file:
+        with open(file_4, 'r', newline='', encoding='utf-8') as residents_file:
             csv_reader = csv.reader(residents_file)
             next(csv_reader)
 
@@ -146,3 +206,62 @@ def read_data_from_file():
     except Exception as err:
         print("ERROR ----->", err)
         return []
+
+
+def clear_all_program_data():
+
+    try:
+
+        print("If you continue, all information from ALL files will be erased without the possibility of recovery!")
+        move_on = input("Are you sure you want to continue?\n[Y][N]\n  ")
+        move_on = move_on.lower()
+        if move_on == 'y':
+            print("Ok!")
+        else:
+            return None
+
+        file_1 = 'Data_of_program/citys.csv'
+        file_2 = 'Data_of_program/houses.csv'
+        file_3 = 'Data_of_program/flats.csv'
+        file_4 = 'Data_of_program/residents.csv'
+
+        with open(file_1, 'w') as file:
+            file.truncate(0)
+        with open(file_2, 'w') as file:
+            file.truncate(0)
+        with open(file_3, 'w') as file:
+            file.truncate(0)
+        with open(file_4, 'w') as file:
+            file.truncate(0)
+
+        print("Data was successfully cleared!")
+        return True
+
+    except Exception as err:
+        print("ERROR IN CLEARING DATA -----> ", err)
+        return False
+
+
+def clear_data(file_to_clear):
+
+    print("If you continue, all information from this file will be erased without the possibility of recovery!")
+    move_on = input("Are you sure you want to continue?\n[Y][N]\n  ")
+    move_on = move_on.lower()
+
+    if move_on == 'y':
+        print("Ok!")
+    else:
+        return None
+
+    file_to_clear = 'Data_of_program/' + file_to_clear + '.csv'
+
+    try:
+        with open(file_to_clear, 'w') as file:
+            file.truncate(0)
+
+        print("Data was successfully cleared!")
+        return True
+
+    except Exception as err:
+        print("ERROR IN CLEARING DATA -----> ", err)
+        return False
