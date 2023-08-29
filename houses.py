@@ -2,7 +2,7 @@ from second import House
 import uuid
 
 
-def house_menu(my_house, houses_list, my_city):
+def house_menu(my_city, my_house, houses_list):
 
     ex = False
 
@@ -62,7 +62,7 @@ def house_menu(my_house, houses_list, my_city):
 
         input("Press any key to continue: ")
 
-    return my_house, houses_list
+    return my_city, my_house, houses_list
 
 
 def add_new_house(houses_list, my_city):
@@ -278,3 +278,45 @@ def choose_house_or_create_a_new_one(houses_list):
             print("Wrong choice!")
 
     return my_house, houses_list
+
+
+def choose_house_or_create_a_new_one(my_house, my_city):
+
+    ext = False
+    temp_house = House(0, 0, 0, 0, 0, 0, 0, 0)
+
+    while not ext:
+
+        full_houses_list(my_city.houses)
+
+        print(
+            "\nDo you want to continue working with what we already have or create a new one?")
+        move_on = input("[1] - Continue\n[2] - Create a new one\n : ")
+
+        if move_on == '1':
+            if len(my_city.houses) == 1:
+                for house in my_city.houses:
+                    my_house = house
+            else:
+                my_house = choose_house_to_work_with(my_city.houses)
+
+            ext = True
+
+        elif move_on == '2':
+            new_house = temp_house.register_new_house(my_city.houses, my_city)
+            if new_house != None:
+                my_city.houses.append(new_house)
+
+                move_on = input(
+                    "The house is registered! Start working with this one?\n [Y][N]\n : ")
+                move_on = move_on.lower()
+
+                if move_on == 'y':
+                    my_house = new_house
+                    ext = True
+                else:
+                    print("Ok! Then let's create a new one!")
+        else:
+            print("Wrong choice!")
+
+    return my_house, my_city

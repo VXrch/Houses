@@ -82,7 +82,7 @@ def city_menu(my_city, citys_list):
         else:
             print("That option is not on the menu!")
 
-        input("Press any key to continue: ")
+        input("Press any key to continue... ")
 
     return my_city, citys_list
 
@@ -91,7 +91,8 @@ def add_new_city(citys_list):
     temp_city = City(0, 0, 0, 0, 0, 0, 0, 0)
 
     new_city = temp_city.register_new_city(citys_list)
-    citys_list.append(new_city)
+    if new_city != None:
+        citys_list.append(new_city)
 
     return citys_list
 
@@ -350,7 +351,7 @@ def display_info_about_specific_city(citys_list):
             city.print_info()
 
 
-def choose_city_or_create_a_new_one(citys_list):
+def choose_city_or_create_a_new_one(my_city, citys_list):
 
     ext = False
     temp_city = City(0, 0, 0, 0, 0, 0, 0, 0)
@@ -364,23 +365,27 @@ def choose_city_or_create_a_new_one(citys_list):
         move_on = input("[1] - Continue\n[2] - Create a new one\n : ")
 
         if move_on == '1':
-            my_city = choose_city_to_work_with(citys_list)
+
+            if len(citys_list) == 1:
+                for city in citys_list:
+                    my_city = city
+            else:
+                my_city = choose_city_to_work_with(citys_list)
+
             ext = True
 
         elif move_on == '2':
             new_city = temp_city.register_new_city(citys_list)
-            citys_list.append(new_city)
+            if new_city != None:
+                citys_list.append(new_city)
+                move_on = input(
+                    "The city is registered! Start working with this city?\n [Y][N]\n : ")
+                move_on = move_on.lower()
 
-            move_on = input(
-                "The city is registered! Start working with this city?\n [Y][N]\n : ")
-            move_on = move_on.lower()
-
-            if move_on == 'y':
-                my_city = new_city
-                ext = True
-            else:
-                print("Ok! Then let's create a new city!")
-        else:
-            print("Wrong choice!")
+                if move_on == 'y':
+                    my_city = new_city
+                    ext = True
+                else:
+                    print("Ok! Then let's create a new city!")
 
     return my_city, citys_list

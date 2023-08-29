@@ -1,4 +1,5 @@
 ID,house_number,address,floors,communication_access,departmental_affiliation,city_ID,city
-dcc36390-70de-4037-aba0-a8dde6cc22e7,1,house 1 address 12,14,individual,atate,97d7ec5e-f8d3-48a4-b39f-2969170c6386,<second.City object at 0x00000267032462D0>
-2536592f-4196-4655-8203-b26be3926d9c,2,address of house 2,9,blocked,cooperative,97d7ec5e-f8d3-48a4-b39f-2969170c6386,<second.City object at 0x00000267032462D0>
-4d9ef41f-b669-432b-9156-3c01d33b6c91,1,house 3 address,12,individual,state,80922f5f-e886-47da-bfb2-8c360214894e,<second.City object at 0x00000267032461D0>
+dcc36390-70de-4037-aba0-a8dde6cc22e7,1,house 1 address 12,14,individual,atate,97d7ec5e-f8d3-48a4-b39f-2969170c6386,<second.City object at 0x00000162A3BFB610>
+2536592f-4196-4655-8203-b26be3926d9c,2,address of house 2,9,blocked,cooperative,97d7ec5e-f8d3-48a4-b39f-2969170c6386,<second.City object at 0x00000162A3BFB610>
+4d9ef41f-b669-432b-9156-3c01d33b6c91,1,house 3 address,12,individual,state,80922f5f-e886-47da-bfb2-8c360214894e,<second.City object at 0x00000162A3BFB510>
+b09b54c9-fee8-4ae3-92f9-0c0ea27740c3,2,asd2,5,mixed,private,80922f5f-e886-47da-bfb2-8c360214894e,<second.City object at 0x00000162A3BFB510>

@@ -88,7 +88,7 @@ def resident_menu(my_house, houses_list):
         else:
             print("That option is not on the menu!")
 
-        input("Press any key to continue: ")
+        input("Press any key to continue... ")
 
     return my_house, houses_list
 
@@ -109,9 +109,11 @@ def add_new_resident(my_house):
             if flat.ID == flat_to_add:
                 new_resident = temp_resident.register_new_resident(
                     flat.flat_number)
-                new_resident.flat_ID = flat.ID
-                flat.attach_resident(new_resident)
                 found = True
+
+                if new_resident != None:
+                    new_resident.flat_ID = flat.ID
+                    flat.attach_resident(new_resident)
 
         if found == False:
             print("Apartment in not found! Incorrect ID!")

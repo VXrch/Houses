@@ -39,7 +39,7 @@ class House:
             f"House id: {self.ID}\nHouse number: {self.house_number}\nAdress: {self.address}\nCity: {self.city.city_name}\nFloors: {self.floors}\nFlats: [", len(self.flats), "]")
 
     def register_new_house(self, houses_list, city):
-
+        new_house = None
         try:
             print(
                 "__________________________________________________________________________________________\n")
@@ -64,12 +64,20 @@ class House:
 
             Id = uuid.uuid4()
 
-            new_house = House(Id, house_nmbr, address, floors,
-                              communication_access, departmental_affiliation, 0, city)
+            if house_nmbr != '' and address != '' and communication_access != '' and departmental_affiliation != '':
 
-            return new_house
+                new_house = House(Id, house_nmbr, address, floors,
+                                  communication_access, departmental_affiliation, 0, city)
+            else:
+                print("You can't register empty value!")
+
+        except ValueError:
+            print("Invalid area input. Please enter a valid number!")
         except Exception as err:
             print("ERROR ---> ", err)
+        finally:
+            input("Press any key to continue...")
+            return new_house
 
 
 class Flat:
@@ -104,6 +112,7 @@ class Flat:
         self.residents.append(resident)
 
     def register_new_flat(self, my_house):
+        new_flat = None
         try:
             print(
                 "__________________________________________________________________________________________\n")
@@ -131,12 +140,14 @@ class Flat:
                 return False
 
             Id = uuid.uuid4()
-
             new_flat = Flat(Id, my_house, flat_nmbr, floor, rooms, area, 0)
 
-            return new_flat
+        except ValueError:
+            print("Invalid area input. Please enter a valid number!")
         except Exception as err:
             print("ERROR ---> ", err)
+        finally:
+            return new_flat
 
 
 class Resident:
@@ -164,6 +175,7 @@ class Resident:
             f"ID: {self.ID}\nName: {self.name}\nSurname: {self.surname}\nAge: {self.age}\nFlat number: {self.flat_number}")
 
     def register_new_resident(self, flat_number):
+        new_resident = None
         try:
             print(
                 "__________________________________________________________________________________________\n")
@@ -175,12 +187,19 @@ class Resident:
             email = input("Email: ")
             Id = uuid.uuid4()
 
-            new_resident = Resident(Id, name, surname, age,
-                                    gender, phone_number, email, flat_number, 0)
+            if name != '' and surname != '' and gender != '' and phone_number != '' and email != '':
+                new_resident = Resident(Id, name, surname, age,
+                                        gender, phone_number, email, flat_number, 0)
+            else:
+                print("You can't register empty value!")
 
-            return new_resident
+        except ValueError:
+            print("Invalid area input. Please enter a valid number!")
         except Exception as err:
             print("ERROR ---> ", err)
+        finally:
+            input("Press any key to continue...")
+            return new_resident
 
 
 class City:
@@ -216,34 +235,43 @@ class City:
             f"City ID: {self.ID}\nCity name: {self.city_name}\nCountry: {self.country}\nRegion: {self.region}\nRegistered houses: {len(self.houses)}")
 
     def register_new_city(self, citys_list):
+        new_city = None
         try:
             print(
                 "__________________________________________________________________________________________\n")
 
             city_name = input("City name: ")
             for city in citys_list:
-                if city.city_name == city_name:
+                if city.city_name.lower() == city_name.lower():
                     print("This town is alredy listed!")
-                    return False
+                    return None
 
             country = input("Country: ")
             region = input("Region: ")
             year_of_foundation = input("Year of foundation: ")
             population = input("City division: ")
 
-            area = float(input("Area in square meters: "))
+            area = float(input("Area in square meters (number): "))
             if area < 1:
                 print("The apartment cannot be less than 1 square meter!")
-                return False
+                return None
 
             population_density = input("Population density: ")
 
             Id = uuid.uuid4()
 
-            new_city = City(Id, city_name, country, region,
-                            year_of_foundation, population, area, population_density)
+            if city_name != '' and country != '' and region != '' and year_of_foundation != '' and population != '' and population_density != '':
+                new_city = City(Id, city_name, country, region,
+                                year_of_foundation, population, area, population_density)
+            else:
+                print("You can't register empty value!")
+                return None
 
+        except ValueError:
+            print("Invalid area input. Please enter a valid number!")
+            return None
         except Exception as err:
             print("ERROR ---> ", err)
         finally:
+            input("Press any key to continue...")
             return new_city

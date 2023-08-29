@@ -28,8 +28,8 @@ def main_menu(my_city, my_house, citys_list):
             my_city, citys_list = city_menu(my_city, citys_list)
 
         elif action == '2':  # house menu
-            my_house, my_city.houses = house_menu(
-                my_house, my_city.houses, my_city)
+            my_city, my_house, houses_list = house_menu(
+                my_city, my_house, houses_list)
 
         elif action == '3':  # flat menu
             my_house, my_city.houses = flat_menu(my_house, my_city.houses)
@@ -76,24 +76,36 @@ print("|-_-_-_-_-_-_-_---|> Welcome <|---_-_-_-_-_-_-_-|")
 print("")
 
 citys_list = read_data_from_file()
+
+
+go_on = True
 if len(citys_list) > 0:
-    my_city, citys_list = choose_city_or_create_a_new_one(citys_list)
+    my_city, citys_list = choose_city_or_create_a_new_one(my_city, citys_list)
 else:
     print(
         "\nYou don't have finished citys yet! To start working with the program, register a new city!")
-    new_city = temp_city.register_new_city(citys_list)
-    citys_list.append(new_city)
-    my_city, citys_list = choose_city_or_create_a_new_one(citys_list)
+    while go_on == True:
+        new_city = temp_city.register_new_city(citys_list)
+        if new_city != None:
+            citys_list.append(new_city)
+            my_city, citys_list = choose_city_or_create_a_new_one(
+                my_city, citys_list)
+            go_on = False
 
 
+go_on = True
 if len(my_city.houses) > 0:
-    choose_house_or_create_a_new_one(my_city.houses)
+    my_house, my_city = choose_house_or_create_a_new_one(my_house, my_city)
 else:
     print(
         "\nYou don't have finished homes yet! To start working with the program, register a new house!")
-    new_house = temp_house.register_new_house(my_city.houses, my_city)
-    my_city.attach_house(new_house)
-    my_house, my_city.houses = choose_house_or_create_a_new_one(my_city.houses)
+    while go_on == True:
+        new_house = temp_house.register_new_house(my_city)
+        if new_house != None:
+            my_city.attach_house(new_house)
+            my_house, my_city = choose_house_or_create_a_new_one(
+                my_house, my_city)
+            go_on = False
 
 
 #####################################################################################################################

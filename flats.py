@@ -94,7 +94,7 @@ def flat_menu(my_house, houses_list):
         else:
             print("That option is not on the menu!")
 
-        input("Press any key to continue: ")
+        input("Press any key to continue... ")
 
     return my_house, houses_list
 
@@ -103,7 +103,7 @@ def add_an_apartment(my_house):
     temp_flat = Flat(0, 0, 0, 0, 0, 0, 0)
 
     new_flat = temp_flat.register_new_flat(my_house)
-    if new_flat != False:
+    if new_flat != None:
         new_flat.house_ID = my_house.ID
         my_house.attach_flat(new_flat)
 
