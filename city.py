@@ -24,7 +24,7 @@ def city_menu(my_city, citys_list):
         print("[8] - Country")
         print("[9] - Region")
         print("[10] - Year of foundation")
-        print("[11] - population")
+        print("[11] - Population")
         print("[12] - Area")
         print("[13] - Area in range")
         print("[14] - Population density")

@@ -1,3 +1,5 @@
 ID,house_number,address,floors,communication_access,departmental_affiliation,city_ID,city
-10aa5096-a2b2-4233-b3f6-1f5905dded81,123A,Street A,5,individual,state,8aad0522-aa71-4bc9-aef2-f7d0176c503b,<second.City object at 0x000001DA55763610>
-de3d4dd9-8061-4877-9b4f-0ed4525e1c54,456B,Street B,3,corridor,private,8aad0522-aa71-4bc9-aef2-f7d0176c503b,<second.City object at 0x000001DA55763610>
+abb79217-275f-4ce9-934c-338a6acfd10b,123A,Street A,5,individual,state,e03e227f-e77a-406e-b05b-6b820f9ba123,<second.City object at 0x0000017E880DAE90>
+619e35f1-47ae-42d9-8531-ccee390d15a3,456B,Street B,3,blocked,private,e03e227f-e77a-406e-b05b-6b820f9ba123,<second.City object at 0x0000017E880DAE90>
+65806b3e-bc8d-4841-b304-cf3d188c4a9e,155C,Street C,9,corridor,cooperative,f5ba5c2f-2303-4a67-92e1-fe10e75a3ded,<second.City object at 0x0000017E880DAD90>
+c2372f8b-ea8e-4e39-beb1-cfafec14d1a1,993D,Street D,14,gallery,mixed,f5ba5c2f-2303-4a67-92e1-fe10e75a3ded,<second.City object at 0x0000017E880DAD90>
