@@ -8,7 +8,7 @@ class House:
         self.ID = ID
         self.house_number = house_number
         self.address = address
-        self.floors = floors
+        self.floors = int(floors)
 
         # Тип доступу (індивідуальні, блоковані, секційні, коридорні, галерейні, змішаної структури)
         self.communication_access = communication_access
@@ -85,10 +85,10 @@ class Flat:
     def __init__(self, ID, house, flat_number, floor, rooms, area, house_ID):
         self.ID = ID
         self.house = house
-        self.flat_number = flat_number
-        self.floor = floor
-        self.rooms = rooms
-        self.area = area
+        self.flat_number = int(flat_number)
+        self.floor = int(floor)
+        self.rooms = int(rooms)
+        self.area = float(area)
         self.house_ID = house_ID
         self.residents = []
 
@@ -156,11 +156,11 @@ class Resident:
         self.ID = ID
         self.name = name
         self.surname = surname
-        self.age = age
+        self.age = int(age)
         self.gender = gender
         self.phone_number = phone_number
         self.email = email
-        self.flat_number = flat_number
+        self.flat_number = int(flat_number)
         self.flat_ID = flat_ID
 
     def print_info(self):

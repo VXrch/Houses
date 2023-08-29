@@ -20,7 +20,9 @@ def house_menu(my_city, my_house, houses_list):
         print("[6] - Display information about a specific house")
         print("[7] - Display information about houses by communication access")
         print("[8] - Display information about houses by departmental affiliation")
-        print("[9] - Display house to work")
+        print("[9] - Display information about houses by floors")
+        print("[10] - Display information about houses by floors in range")
+        print("[11] - Display house to work")
         print("[0] - Go back")
         print("__________________________________________________________________________________________\n")
         action = input("/(o_o)\\  ")
@@ -54,7 +56,13 @@ def house_menu(my_city, my_house, houses_list):
         elif action == '8':  # Display information about houses by departmental affiliation
             print_by_departmental_affiliation(houses_list)
 
-        elif action == '9':  # Display my house
+        elif action == '9':  # Display by floor
+            print_by_floors(houses_list)
+
+        elif action == '10':  # Display by floor in rage
+            print_by_floors_in_range(houses_list)
+
+        elif action == '11':  # Display my house
             my_house.print_info()
 
         else:
@@ -228,6 +236,41 @@ def print_by_communication_access(houses_list):
 
     if find == False:
         print("House is not found!")
+
+
+def print_by_floors(houses_list):
+    try:
+        find = False
+        floor_to_searrch = int(input("Enter rooms: "))
+
+        for house in houses_list:
+            if house.floors == floor_to_searrch:
+                house.print_info()
+                find = True
+
+        if find == False:
+            print("House is not found!")
+
+    except Exception as err:
+        print("Error! ---> ", err)
+
+
+def print_by_floors_in_range(houses_list):
+    try:
+        find = False
+        floor_to_searrch_min = int(input("Enter rooms (min): "))
+        floor_to_searrch_max = int(input("Enter rooms (max): "))
+
+        for house in houses_list:
+            if floor_to_searrch_min <= house.floors <= floor_to_searrch_max:
+                house.print_info()
+                find = True
+
+        if find == False:
+            print("House is not found!")
+
+    except Exception as err:
+        print("Error! ---> ", err)
 
 
 def full_houses_list(houses_list):

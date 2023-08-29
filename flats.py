@@ -265,12 +265,10 @@ def print_the_same_type(flats_list):
 
 def print_by_area(flats_list):
     try:
-
-        full_list_of_apartments(flats_list)
         find = False
 
-        min_area_to_search = int(input("Enter min area range: "))
-        max_area_to_search = int(input("Enter max area range: "))
+        min_area_to_search = float(input("Enter min area range: "))
+        max_area_to_search = float(input("Enter max area range: "))
 
         for flat in flats_list:
             if min_area_to_search <= flat.area <= max_area_to_search:
@@ -281,7 +279,7 @@ def print_by_area(flats_list):
             print("Flat is not found!")
 
     except TypeError:
-        print("It isn't number!")
+        print("Type Error!")
         return False
     except Exception as err:
         print("ERROR: ", err)

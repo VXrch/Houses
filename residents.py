@@ -18,16 +18,16 @@ def resident_menu(my_house, houses_list):
         print("Display only in this house: ")
         print("[4] - Display all residents")
         print("[5] - Display residents in one floor")
-        print("[6] - Displat residents by age")
-        print("[7] - Displat residents by age in range")
-        print("[8] - Displat a specific resident")
+        print("[6] - Display residents by age")
+        print("[7] - Display residents by age in range")
+        print("[8] - Display a specific resident")
         print()
         print("Display in all houses: ")
         print("[9] - Display all residents")
         print("[10] - Display residents in one floor")
-        print("[11] - Displat residents by age")
-        print("[12] - Displat residents by age in range")
-        print("[13] - Displat a specific resident")
+        print("[11] - Display residents by age")
+        print("[12] - Display residents by age in range")
+        print("[13] - Display a specific resident")
         print()
         print("[0] - Go back")
         print("__________________________________________________________________________________________\n")
@@ -51,17 +51,17 @@ def resident_menu(my_house, houses_list):
 
         elif action == '5':  # Display residents in one floor
             residents_list = residents_in_one_house(my_house)
-            display_residents_by_floor(residents_list)
+            display_residents_by_floor(houses_list)
 
-        elif action == '6':  # Displat residents by age
+        elif action == '6':  # Display residents by age
             residents_list = residents_in_one_house(my_house)
             display_residents_by_age(residents_list)
 
-        elif action == '7':  # Displat residents by age in range
+        elif action == '7':  # Display residents by age in range
             residents_list = residents_in_one_house(my_house)
             display_residents_by_age_range(residents_list)
 
-        elif action == '8':  # Displat a specific resident
+        elif action == '8':  # Display a specific resident
             residents_list = residents_in_one_house(my_house)
             display_specific_resident(residents_list)
 
@@ -71,17 +71,17 @@ def resident_menu(my_house, houses_list):
 
         elif action == '10':  # (ALL HOUSES) Display residents in one floor
             residents_list = residents_in_all_houses(houses_list)
-            display_residents_by_floor(residents_list)
+            display_residents_by_floor(houses_list)
 
-        elif action == '11':  # (ALL HOUSES) Displat residents by age
+        elif action == '11':  # (ALL HOUSES) Display residents by age
             residents_list = residents_in_all_houses(houses_list)
             display_residents_by_age(residents_list)
 
-        elif action == '12':  # (ALL HOUSES) Displat residents by age in range
+        elif action == '12':  # (ALL HOUSES) Display residents by age in range
             residents_list = residents_in_all_houses(houses_list)
             display_residents_by_age_range(residents_list)
 
-        elif action == '13':  # (ALL HOUSES) Displat a specific resident
+        elif action == '13':  # (ALL HOUSES) Display a specific resident
             residents_list = residents_in_all_houses(houses_list)
             display_specific_resident(residents_list)
 
@@ -296,16 +296,17 @@ def display_residents_by_age(residents_list):
         print("Error: ", err)
 
 
-def display_residents_by_floor(residents_list):
+def display_residents_by_floor(houses_list):
     try:
         find = False
         floor_to_search = int(input("Enter floor to search: "))
 
-        for flat in residents_list:
-            if flat.floor == floor_to_search:
-                for resident in flat.residents:
-                    resident.print_short_info()
-                    find = True
+        for house in houses_list:
+            for flat in house.flats:
+                if flat.floor == floor_to_search:
+                    for resident in flat.residents:
+                        resident.print_short_info()
+                        find = True
 
         if find == False:
             print("Resident in not found!")
