@@ -60,7 +60,7 @@ def house_menu(my_city, my_house, houses_list):
         else:
             print("That option is not on the menu!")
 
-        input("Press any key to continue: ")
+        input("Press any key to continue... ")
 
     return my_city, my_house, houses_list
 
@@ -69,7 +69,8 @@ def add_new_house(houses_list, my_city):
     temp_house = House(0, 0, 0, 0, 0, 0, 0, 0)
 
     new_house = temp_house.register_new_house(houses_list, my_city)
-    houses_list.append(new_house)
+    if new_house != None:
+        houses_list.append(new_house)
 
     return houses_list
 
@@ -113,7 +114,7 @@ def change_house_info(houses_list):
     house_to_change_info = uuid.UUID(house_to_change_info)
 
     info_to_change = input(
-        "What do you want to change?\n[1] - House number\n[2] - Address\n[3] - Floors\n[4] - Communication access\n[5] - Departmental affiliation\n[0] - Go back")
+        "What do you want to change?\n[1] - House number\n[2] - Address\n[3] - Floors\n[4] - Communication access\n[5] - Departmental affiliation\n[0] - Go back\n---> ")
 
     try:
         for house in houses_list:
@@ -207,6 +208,7 @@ def print_by_departmental_affiliation(houses_list):
     for house in houses_list:
         if house.departmental_affiliation == dep_acc:
             house.print_short_info()
+            find = True
 
     if find == False:
         print("House is not found!")
@@ -222,6 +224,7 @@ def print_by_communication_access(houses_list):
     for house in houses_list:
         if house.communication_access == com_access:
             house.print_short_info()
+            find = True
 
     if find == False:
         print("House is not found!")
@@ -235,6 +238,7 @@ def full_houses_list(houses_list):
 def display_info_about_specific_house(houses_list):
 
     full_houses_list(houses_list)
+    find = False
 
     house_to_display = input("Enter house ID to search full info: ")
     house_to_display = uuid.UUID(house_to_display)
@@ -242,42 +246,10 @@ def display_info_about_specific_house(houses_list):
     for house in houses_list:
         if house.ID == house_to_display:
             house.print_info()
+            find = True
 
-
-def choose_house_or_create_a_new_one(houses_list):
-
-    ext = False
-    temp_house = House(0, 0, 0, 0, 0, 0, 0, 0)
-
-    while ext == False:
-
-        full_houses_list(houses_list)
-
-        print(
-            "\nDo you want to continue working with what we already have or create a new one?")
-        move_on = input("[1] - Continue\n[2] - Create a new one\n : ")
-
-        if move_on == '1':
-            my_house = choose_house_to_work_with(houses_list)
-            ext = True
-
-        elif move_on == '2':
-            new_house = temp_house.register_new_house(houses_list)
-            houses_list.append(new_house)
-
-            move_on = input(
-                "The house is registered! Start working with this one?\n [Y][N]\n : ")
-            move_on = move_on.lower()
-
-            if move_on == 'y':
-                my_house = new_house
-                ext = True
-            else:
-                print("Ok! Then let's create a new one!")
-        else:
-            print("Wrong choice!")
-
-    return my_house, houses_list
+    if find == False:
+        print("House is not found!")
 
 
 def choose_house_or_create_a_new_one(my_house, my_city):

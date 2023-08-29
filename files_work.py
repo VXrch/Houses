@@ -200,11 +200,10 @@ def read_data_from_file():
         return list_of_citys
 
     except TypeError as err:
-        print("EROOR -----> ", err)
+        print("Type Error -----> ", err)
         return []
 
-    except Exception as err:
-        print("ERROR ----->", err)
+    except Exception:
         return []
 
 

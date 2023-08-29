@@ -1,4 +1,9 @@
 ID,name,surname,age,gender,phone_number,email,flat_number,flat_ID
-9b087180-06db-4ee3-a4da-5345b6751b39,Alex,Taylor,34,male,+380294719345,alix_taylor_123@gmail.com,1,c3fff6e3-c968-405d-8861-8d9157d625a3
-4cca3d02-3b72-42e4-85d0-f40afe489fa5,Max,Smith,27,male,+000000000000,mail@tempmail.com,1,9b043a1b-f644-471e-9a43-1b066a62e348
-048d0a93-31ea-44de-821c-f480a6ceb513,Ethan,Anderson,83,male,+000000000,ethan_anderson,1,5ae267c1-4248-42d6-a71f-67299b56e3ce
+ec9a19f8-bf44-43b0-981c-e5103f81e689,John,Doe,30,Male,123-456-7890,john@example.com,1,190c6459-70ec-4b83-afcc-16c89d1fc88b
+6a360ae7-64bf-4979-bdb5-70d1409ab588,Jane,Smith,25,Female,987-654-3210,jane@example.com,1,190c6459-70ec-4b83-afcc-16c89d1fc88b
+9d1f94af-2c02-4a1a-b78d-aafefe8106c1,Michael,Johnson,40,Male,555-555-5555,michael@example.com,2,aced79ee-7c41-42e9-8ca2-ce1c3477cc9d
+afb5974d-e2fa-4bce-8377-73e125c3796b,Emily,Williams,28,Female,111-222-3333,emily@example.com,2,aced79ee-7c41-42e9-8ca2-ce1c3477cc9d
+511068bf-3931-4679-bfc1-b65424084ba7,John,Smith,30,Male,123-456-789,john@example.com,1,fcb56552-fca8-4f05-ae6a-77201e3ef6d0
+4dab78dc-b7f6-400e-9ff8-938ea795e69d,Emily,Johnson,26,Female,534-938-956,emily@example.com,1,fcb56552-fca8-4f05-ae6a-77201e3ef6d0
+3a601bd4-50d3-4b55-a349-0a6275c82268,Michael,Brown,40,Male,945-285-194,michael@example.com,2,e94cfe00-c5ec-4fe2-a611-406f5ba1beb3
+45ffdd07-9b72-49df-ac45-f1fd641b8e77,Sophia,Davis,22,Female,234-234-765,sophia@example.com,2,e94cfe00-c5ec-4fe2-a611-406f5ba1beb3

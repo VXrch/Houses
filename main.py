@@ -28,8 +28,8 @@ def main_menu(my_city, my_house, citys_list):
             my_city, citys_list = city_menu(my_city, citys_list)
 
         elif action == '2':  # house menu
-            my_city, my_house, houses_list = house_menu(
-                my_city, my_house, houses_list)
+            my_city, my_house, my_city.houses = house_menu(
+                my_city, my_house, my_city.houses)
 
         elif action == '3':  # flat menu
             my_house, my_city.houses = flat_menu(my_house, my_city.houses)
@@ -100,7 +100,7 @@ else:
     print(
         "\nYou don't have finished homes yet! To start working with the program, register a new house!")
     while go_on == True:
-        new_house = temp_house.register_new_house(my_city)
+        new_house = temp_house.register_new_house(my_city.houses, my_city)
         if new_house != None:
             my_city.attach_house(new_house)
             my_house, my_city = choose_house_or_create_a_new_one(

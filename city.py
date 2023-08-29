@@ -136,7 +136,7 @@ def change_city_info(citys_list):
     city_to_change_info = uuid.UUID(city_to_change_info)
 
     info_to_change = input(
-        "What do you want to change?\n[1] - City name\n[2] - Country\n[3] - Region\n[4] - Year of foundationation\n[5] - population\n[6] - Area\n[7] - Population density\n[0] - Go back")
+        "What do you want to change?\n[1] - City name\n[2] - Country\n[3] - Region\n[4] - Year of foundationation\n[5] - population\n[6] - Area\n[7] - Population density\n[0] - Go back\n---> ")
 
     try:
 
@@ -243,6 +243,7 @@ def print_by_country(citys_list):
     for city in citys_list:
         if city.country == search:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -257,6 +258,7 @@ def print_by_region(citys_list):
     for city in citys_list:
         if city.region == search:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -271,6 +273,7 @@ def print_by_year_of_foundation(citys_list):
     for city in citys_list:
         if city.year_of_foundation == search:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -286,6 +289,7 @@ def print_by_population(citys_list):
     for city in citys_list:
         if search_min <= city.population <= search_max:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -300,6 +304,7 @@ def print_by_area(citys_list):
     for city in citys_list:
         if city.area == search:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -315,6 +320,7 @@ def print_by_area_in_range(citys_list):
     for city in citys_list:
         if search_min <= city.area <= search_max:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -329,6 +335,7 @@ def print_by_population_density(citys_list):
     for city in citys_list:
         if city.population_density == search:
             city.print_short_info()
+            find = True
 
     if find == False:
         print("City is not found!")
@@ -337,11 +344,13 @@ def print_by_population_density(citys_list):
 def full_citys_list(citys_list):
     for city in citys_list:
         city.print_short_info()
+        find = True
 
 
 def display_info_about_specific_city(citys_list):
 
     full_citys_list(citys_list)
+    find = False
 
     city_to_display = input("Enter city ID to search full info: ")
     city_to_display = uuid.UUID(city_to_display)
@@ -349,6 +358,10 @@ def display_info_about_specific_city(citys_list):
     for city in citys_list:
         if city.ID == city_to_display:
             city.print_info()
+            find = True
+
+    if find == False:
+        print("City is not found!")
 
 
 def choose_city_or_create_a_new_one(my_city, citys_list):

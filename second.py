@@ -76,7 +76,6 @@ class House:
         except Exception as err:
             print("ERROR ---> ", err)
         finally:
-            input("Press any key to continue...")
             return new_house
 
 
@@ -198,7 +197,6 @@ class Resident:
         except Exception as err:
             print("ERROR ---> ", err)
         finally:
-            input("Press any key to continue...")
             return new_resident
 
 
@@ -273,5 +271,4 @@ class City:
         except Exception as err:
             print("ERROR ---> ", err)
         finally:
-            input("Press any key to continue...")
             return new_city

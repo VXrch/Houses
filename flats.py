@@ -138,16 +138,18 @@ def delete_an_apartment(my_house):
 def change_apartment_info(my_house):
 
     full_list_of_apartments(my_house)
+    find = False
 
     flat_to_change_info = input("Enter house ID: ")
     flat_to_change_info = uuid.UUID(flat_to_change_info)
 
     info_to_change = input(
-        "What do you want to change?\n[1] - Flat number\n[2] - Floor\n[3] - Rooms\n[4] - Area\n[0] - Go back")
+        "What do you want to change?\n[1] - Flat number\n[2] - Floor\n[3] - Rooms\n[4] - Area\n[0] - Go back\n---> ")
 
     try:
         for flat in my_house.flats:
             if flat.ID == flat_to_change_info:
+                find = True
 
                 if info_to_change == '1':  # Flat number
                     new_info = int(
@@ -190,6 +192,9 @@ def change_apartment_info(my_house):
                 else:
                     print("That option is not on the menu!")
 
+        if find == False:
+            print("Flat is not found!")
+
     except TypeError:
         print("It isn't number!")
     except Exception as err:
@@ -199,13 +204,19 @@ def change_apartment_info(my_house):
 
 
 def full_list_of_apartments(flats_list):
+    find = False
     for flat in flats_list:
         flat.print_short_info()
+        find = True
+
+    if find == False:
+        print("You haven't any apartments!")
 
 
 def display_specific_apartment(flats_list):
 
     full_list_of_apartments(flats_list)
+    find = False
 
     apartment_to_search = input("Enter apartment ID: ")
     apartment_to_search = uuid.UUID(apartment_to_search)
@@ -213,6 +224,10 @@ def display_specific_apartment(flats_list):
     for flat in flats_list:
         if flat.ID == apartment_to_search:
             flat.print_info()
+            find = True
+
+    if find == False:
+        print("Flat is not found!")
 
 
 def print_by_floor(flats_list):
@@ -233,11 +248,16 @@ def print_by_floor(flats_list):
 
 def print_the_same_type(flats_list):
     try:
+        find = False
         rooms_to_search = int(input("Enter rooms: "))
 
         for flat in flats_list:
             if flat.rooms == rooms_to_search:
                 flat.print_info()
+                find = True
+
+        if find == False:
+            print("Flat is not found!")
 
     except Exception as err:
         print("Error! ---> ", err)
@@ -247,6 +267,7 @@ def print_by_area(flats_list):
     try:
 
         full_list_of_apartments(flats_list)
+        find = False
 
         min_area_to_search = int(input("Enter min area range: "))
         max_area_to_search = int(input("Enter max area range: "))
@@ -254,6 +275,10 @@ def print_by_area(flats_list):
         for flat in flats_list:
             if min_area_to_search <= flat.area <= max_area_to_search:
                 flat.print_short_info()
+                find = True
+
+        if find == False:
+            print("Flat is not found!")
 
     except TypeError:
         print("It isn't number!")

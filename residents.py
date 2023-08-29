@@ -183,7 +183,7 @@ def change_resident_info(my_house):
         for resident in rsdns_list:
             if resident.ID == choice:
                 info_to_change = input(
-                    "What do you want to change?\n[1] - Name\n[2] - Surname\n[3] - Age\n[4] - Phone number\n[5] - Email\n[6] - Flat number\n")
+                    "What do you want to change?\n[1] - Name\n[2] - Surname\n[3] - Age\n[4] - Phone number\n[5] - Email\n[6] - Flat number\n---> ")
 
                 if info_to_change == '1':  # Name
                     new_info = input(
@@ -234,12 +234,19 @@ def change_resident_info(my_house):
 
 
 def display_full_residents_list(residents_list):
+    find = False
+
     for resident in residents_list:
         resident.print_short_info()
+        find = True
+
+    if find == False:
+        print("You haven't any residents!")
 
 
 def display_specific_resident(residents_list):
     display_full_residents_list(residents_list)
+    find = False
 
     resident_to_display = input("Select resident to display (enter ID): ")
     resident_to_display = uuid.UUID(resident_to_display)
@@ -247,50 +254,78 @@ def display_specific_resident(residents_list):
     for rsdnt in residents_list:
         if rsdnt.ID == resident_to_display:
             rsdnt.print_info()
+            find = True
+
+    if find == False:
+        print("Resident is not found!")
 
 
 def display_residents_by_age_range(residents_list):
     try:
+
+        find = False
         age_to_search_min = int(input("Enter min range to search: "))
         age_to_search_max = int(input("Enter max range to search: "))
 
         for resident in residents_list:
             if age_to_search_min <= resident.age <= age_to_search_max:
                 resident.print_short_info()
+                find = True
+
+        if find == False:
+            print("Resident is not found!")
+
     except Exception as err:
         print("Error: ", err)
 
 
 def display_residents_by_age(residents_list):
     try:
+        find = False
         age_to_search = int(input("Enter age to search: "))
 
         for resident in residents_list:
             if resident.age == age_to_search:
                 resident.print_short_info()
+                find = True
+
+        if find == False:
+            print("Resident is not found!")
+
     except Exception as err:
         print("Error: ", err)
 
 
 def display_residents_by_floor(residents_list):
     try:
+        find = False
         floor_to_search = int(input("Enter floor to search: "))
 
         for flat in residents_list:
             if flat.floor == floor_to_search:
                 for resident in flat.residents:
                     resident.print_short_info()
+                    find = True
+
+        if find == False:
+            print("Resident in not found!")
+
     except Exception as err:
         print("Error: ", err)
 
 
 def residents_in_all_houses(houses_list):
     residents_list = []
+    find = False
 
     for house in houses_list:
         for flat in house.flats:
             for resident in flat.residents:
                 residents_list.append(resident)
+                find = True
+
+    if find == False:
+        print("You haven't any residents!")
 
     return residents_list
 
