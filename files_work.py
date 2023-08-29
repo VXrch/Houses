@@ -39,12 +39,18 @@ def files_menu(citys_list):
 
         elif action == '4':  # Clear data from the citys file
             clear_data('citys')
+            clear_data('houses')
+            clear_data('flats')
+            clear_data('residents')
 
         elif action == '5':  # Clear data from the houses file
             clear_data('houses')
+            clear_data('flats')
+            clear_data('residents')
 
         elif action == '6':  # Clear data from the flats file
             clear_data('flats')
+            clear_data('residents')
 
         elif action == '7':  # Clear data from the residents file
             clear_data('residents')
@@ -243,7 +249,7 @@ def clear_all_program_data():
 
 def clear_data(file_to_clear):
 
-    print("If you continue, all information from this file will be erased without the possibility of recovery!")
+    print("If you continue, all information from this file will be erased without the possibility of recovery!\nWhen you delete files, all files attached to it will be automatically deleted!")
     move_on = input("Are you sure you want to continue?\n[Y][N]\n  ")
     move_on = move_on.lower()
 
