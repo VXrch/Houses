@@ -25,7 +25,8 @@ def main_menu(my_city, my_house, citys_list):
         action = input("/(o_o)\\  ")
 
         if action == '1':  # city menu
-            my_city, citys_list = city_menu(my_city, citys_list)
+            my_city, my_house, citys_list = city_menu(
+                my_city, my_house, citys_list)
 
         elif action == '2':  # house menu
             my_city, my_house, my_city.houses = house_menu(

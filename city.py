@@ -1,8 +1,9 @@
-from second import City
+from houses import choose_house_or_create_a_new_one
+from second import City, House
 import uuid
 
 
-def city_menu(my_city, citys_list):
+def city_menu(my_city, my_house, citys_list):
 
     ex = False
 
@@ -48,6 +49,8 @@ def city_menu(my_city, citys_list):
         elif action == '4':  # Change the city to work
             my_new_city = change_city_to_work_with(citys_list)
             my_city = my_new_city
+            if len(my_city.houses) == 0:
+                homes_null()
 
         elif action == '5':  # Display full list of citys
             full_citys_list(citys_list)
@@ -84,7 +87,7 @@ def city_menu(my_city, citys_list):
 
         input("Press any key to continue... ")
 
-    return my_city, citys_list
+    return my_city, my_house, citys_list
 
 
 def add_new_city(citys_list):
@@ -130,15 +133,14 @@ def delete_city(citys_list, my_city):
 
 
 def change_city_info(citys_list):
-    full_citys_list(citys_list)
-
-    city_to_change_info = input("Enter city ID: ")
-    city_to_change_info = uuid.UUID(city_to_change_info)
-
-    info_to_change = input(
-        "What do you want to change?\n[1] - City name\n[2] - Country\n[3] - Region\n[4] - Year of foundationation\n[5] - population\n[6] - Area\n[7] - Population density\n[0] - Go back\n---> ")
-
     try:
+        full_citys_list(citys_list)
+
+        city_to_change_info = input("Enter city ID: ")
+        city_to_change_info = uuid.UUID(city_to_change_info)
+
+        info_to_change = input(
+            "What do you want to change?\n[1] - City name\n[2] - Country\n[3] - Region\n[4] - Year of foundationation\n[5] - population\n[6] - Area\n[7] - Population density\n[0] - Go back\n---> ")
 
         for city in citys_list:
             if city.ID == city_to_change_info:
@@ -200,38 +202,48 @@ def change_city_info(citys_list):
 
 
 def choose_city_to_work_with(citys_list):
+    try:
+        ext = False
 
-    ext = False
+        while not ext:
 
-    while not ext:
+            full_citys_list(citys_list)
+
+            print("\n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n")
+            city_to_work = input("Enter city id to work with: ")
+            city_to_work = uuid.UUID(city_to_work)
+
+            for city in citys_list:
+                if city.ID == city_to_work:
+                    return city
+
+            print("Wrong ID! Try again!")
+            input("")
+
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
+
+
+def change_city_to_work_with(citys_list):
+    try:
 
         full_citys_list(citys_list)
 
-        print("\n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n")
         city_to_work = input("Enter city id to work with: ")
         city_to_work = uuid.UUID(city_to_work)
 
         for city in citys_list:
             if city.ID == city_to_work:
+                print("city was found!")
                 return city
 
-        print("Wrong ID! Try again!")
-        input("")
-
-
-def change_city_to_work_with(citys_list):
-
-    full_citys_list(citys_list)
-
-    city_to_work = input("Enter city id to work with: ")
-    city_to_work = uuid.UUID(city_to_work)
-
-    for city in citys_list:
-        if city.ID == city_to_work:
-            print("city was found!")
-            return city
-
-    print("City is not found!")
+        print("City is not found!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
 
 
 def print_by_country(citys_list):
@@ -348,20 +360,25 @@ def full_citys_list(citys_list):
 
 
 def display_info_about_specific_city(citys_list):
+    try:
 
-    full_citys_list(citys_list)
-    find = False
+        full_citys_list(citys_list)
+        find = False
 
-    city_to_display = input("Enter city ID to search full info: ")
-    city_to_display = uuid.UUID(city_to_display)
+        city_to_display = input("Enter city ID to search full info: ")
+        city_to_display = uuid.UUID(city_to_display)
 
-    for city in citys_list:
-        if city.ID == city_to_display:
-            city.print_info()
-            find = True
+        for city in citys_list:
+            if city.ID == city_to_display:
+                city.print_info()
+                find = True
 
-    if find == False:
-        print("City is not found!")
+        if find == False:
+            print("City is not found!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
 
 
 def choose_city_or_create_a_new_one(my_city, citys_list):
@@ -402,3 +419,20 @@ def choose_city_or_create_a_new_one(my_city, citys_list):
                     print("Ok! Then let's create a new city!")
 
     return my_city, citys_list
+
+
+def homes_null(my_city, my_house):
+    temp_house = House(0, 0, 0, 0, 0, 0, 0, 0)
+    go_on = True
+
+    print(
+        "\nYou don't have finished homes yet! To start working with the program, register a new house!")
+    while go_on == True:
+        new_house = temp_house.register_new_house(my_city.houses, my_city)
+        if new_house != None:
+            my_city.attach_house(new_house)
+            my_house, my_city = choose_house_or_create_a_new_one(
+                my_house, my_city)
+            go_on = False
+
+    return my_city, my_house

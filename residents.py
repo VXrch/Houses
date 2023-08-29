@@ -173,13 +173,13 @@ def delete_resident(my_house):
 
 
 def change_resident_info(my_house):
-    rsdns_list = residents_in_one_house(my_house)
-    display_full_residents_list(rsdns_list)
-
-    choice = input("Enter resident's ID: ")
-    choice = uuid.UUID(choice)
-
     try:
+        rsdns_list = residents_in_one_house(my_house)
+        display_full_residents_list(rsdns_list)
+
+        choice = input("Enter resident's ID: ")
+        choice = uuid.UUID(choice)
+
         for resident in rsdns_list:
             if resident.ID == choice:
                 info_to_change = input(
@@ -245,19 +245,24 @@ def display_full_residents_list(residents_list):
 
 
 def display_specific_resident(residents_list):
-    display_full_residents_list(residents_list)
-    find = False
+    try:
+        display_full_residents_list(residents_list)
+        find = False
 
-    resident_to_display = input("Select resident to display (enter ID): ")
-    resident_to_display = uuid.UUID(resident_to_display)
+        resident_to_display = input("Select resident to display (enter ID): ")
+        resident_to_display = uuid.UUID(resident_to_display)
 
-    for rsdnt in residents_list:
-        if rsdnt.ID == resident_to_display:
-            rsdnt.print_info()
-            find = True
+        for rsdnt in residents_list:
+            if rsdnt.ID == resident_to_display:
+                rsdnt.print_info()
+                find = True
 
-    if find == False:
-        print("Resident is not found!")
+        if find == False:
+            print("Resident is not found!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
 
 
 def display_residents_by_age_range(residents_list):

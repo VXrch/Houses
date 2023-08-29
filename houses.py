@@ -116,15 +116,15 @@ def delete_house(houses_list, my_house):
 
 
 def change_house_info(houses_list):
-    full_houses_list(houses_list)
-
-    house_to_change_info = input("Enter house ID: ")
-    house_to_change_info = uuid.UUID(house_to_change_info)
-
-    info_to_change = input(
-        "What do you want to change?\n[1] - House number\n[2] - Address\n[3] - Floors\n[4] - Communication access\n[5] - Departmental affiliation\n[0] - Go back\n---> ")
-
     try:
+        full_houses_list(houses_list)
+
+        house_to_change_info = input("Enter house ID: ")
+        house_to_change_info = uuid.UUID(house_to_change_info)
+
+        info_to_change = input(
+            "What do you want to change?\n[1] - House number\n[2] - Address\n[3] - Floors\n[4] - Communication access\n[5] - Departmental affiliation\n[0] - Go back\n---> ")
+
         for house in houses_list:
             if house.ID == house_to_change_info:
 
@@ -173,37 +173,47 @@ def change_house_info(houses_list):
 
 
 def choose_house_to_work_with(houses_list):
+    try:
 
-    ext = False
+        ext = False
 
-    while not ext:
+        while not ext:
+
+            full_houses_list(houses_list)
+
+            print("\n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n")
+            house_to_work = input("Enter house id to work with: ")
+            house_to_work = uuid.UUID(house_to_work)
+
+            for house in houses_list:
+                if house.ID == house_to_work:
+                    return house
+
+            print("Wrong ID! Try again!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
+
+
+def change_house_to_work_with(houses_list):
+    try:
 
         full_houses_list(houses_list)
 
-        print("\n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n")
         house_to_work = input("Enter house id to work with: ")
         house_to_work = uuid.UUID(house_to_work)
 
         for house in houses_list:
             if house.ID == house_to_work:
+                print("House was found!")
                 return house
 
-        print("Wrong ID! Try again!")
-
-
-def change_house_to_work_with(houses_list):
-
-    full_houses_list(houses_list)
-
-    house_to_work = input("Enter house id to work with: ")
-    house_to_work = uuid.UUID(house_to_work)
-
-    for house in houses_list:
-        if house.ID == house_to_work:
-            print("House was found!")
-            return house
-
-    print("House is not found!")
+        print("House is not found!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
 
 
 def print_by_departmental_affiliation(houses_list):
@@ -279,20 +289,25 @@ def full_houses_list(houses_list):
 
 
 def display_info_about_specific_house(houses_list):
+    try:
 
-    full_houses_list(houses_list)
-    find = False
+        full_houses_list(houses_list)
+        find = False
 
-    house_to_display = input("Enter house ID to search full info: ")
-    house_to_display = uuid.UUID(house_to_display)
+        house_to_display = input("Enter house ID to search full info: ")
+        house_to_display = uuid.UUID(house_to_display)
 
-    for house in houses_list:
-        if house.ID == house_to_display:
-            house.print_info()
-            find = True
+        for house in houses_list:
+            if house.ID == house_to_display:
+                house.print_info()
+                find = True
 
-    if find == False:
-        print("House is not found!")
+        if find == False:
+            print("House is not found!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
 
 
 def choose_house_or_create_a_new_one(my_house, my_city):

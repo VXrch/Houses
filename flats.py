@@ -136,17 +136,17 @@ def delete_an_apartment(my_house):
 
 
 def change_apartment_info(my_house):
-
-    full_list_of_apartments(my_house)
-    find = False
-
-    flat_to_change_info = input("Enter house ID: ")
-    flat_to_change_info = uuid.UUID(flat_to_change_info)
-
-    info_to_change = input(
-        "What do you want to change?\n[1] - Flat number\n[2] - Floor\n[3] - Rooms\n[4] - Area\n[0] - Go back\n---> ")
-
     try:
+
+        full_list_of_apartments(my_house)
+        find = False
+
+        flat_to_change_info = input("Enter house ID: ")
+        flat_to_change_info = uuid.UUID(flat_to_change_info)
+
+        info_to_change = input(
+            "What do you want to change?\n[1] - Flat number\n[2] - Floor\n[3] - Rooms\n[4] - Area\n[0] - Go back\n---> ")
+
         for flat in my_house.flats:
             if flat.ID == flat_to_change_info:
                 find = True
@@ -214,20 +214,25 @@ def full_list_of_apartments(flats_list):
 
 
 def display_specific_apartment(flats_list):
+    try:
 
-    full_list_of_apartments(flats_list)
-    find = False
+        full_list_of_apartments(flats_list)
+        find = False
 
-    apartment_to_search = input("Enter apartment ID: ")
-    apartment_to_search = uuid.UUID(apartment_to_search)
+        apartment_to_search = input("Enter apartment ID: ")
+        apartment_to_search = uuid.UUID(apartment_to_search)
 
-    for flat in flats_list:
-        if flat.ID == apartment_to_search:
-            flat.print_info()
-            find = True
+        for flat in flats_list:
+            if flat.ID == apartment_to_search:
+                flat.print_info()
+                find = True
 
-    if find == False:
-        print("Flat is not found!")
+        if find == False:
+            print("Flat is not found!")
+    except TypeError:
+        print("Wrong type!")
+    except Exception as err:
+        print("ERROR ------> ", err)
 
 
 def print_by_floor(flats_list):
