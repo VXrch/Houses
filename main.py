@@ -1,5 +1,5 @@
 from second import House, City
-from houses import house_menu, choose_house_to_work_with, choose_house_or_create_a_new_one
+from houses import house_menu, choose_house_or_create_a_new_one
 from files_work import files_menu, write_data_to_file, read_data_from_file
 from city import city_menu, choose_city_or_create_a_new_one
 from residents import resident_menu

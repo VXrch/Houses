@@ -50,7 +50,7 @@ def city_menu(my_city, my_house, citys_list):
             my_new_city = change_city_to_work_with(citys_list)
             my_city = my_new_city
             if len(my_city.houses) == 0:
-                homes_null()
+                homes_null(my_city, my_house)
 
         elif action == '5':  # Display full list of citys
             full_citys_list(citys_list)
